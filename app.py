@@ -3,7 +3,21 @@ from fastapi import FastAPI
 from Routes.hostels import hostel_router
 from Routes.loginsignup import login_signup
 
+from fastapi.middleware.cors import CORSMiddleware
+origins = [
+    "*",
+]
+
+
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(hostel_router)
 app.include_router(login_signup)

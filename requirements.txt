@@ -8,3 +8,4 @@ python-jose[cryptography]
 passlib[bcrypt] 
 pyjwt
 python-multipart
+python-dotenv
