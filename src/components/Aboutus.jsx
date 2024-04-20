@@ -1,5 +1,6 @@
 import React from "react";
 import namaste from "../images/namaste.jpg";
+console.log(namaste);
 const Aboutus = () => {
   return (
     <div>
@@ -19,8 +20,10 @@ const Aboutus = () => {
       <section className=" bg-gray-200 border-2  h-[auto]">
         <div className="border-none my-14 mx-16 bg-seto min-h-[750px] rounded-3xl flex py-12 px-12">
           <div className="flex flex-col w-[50vw] gap-6">
-            <h1 className="text-4xl font-medium">INTRODUCTION</h1>
-            <span className="text-xl font-semibold">INTRODUCTION</span>
+            <h1 className="text-4xl font-medium">
+              {"Introduction".toUpperCase()}
+            </h1>
+            <span className="text-xl font-semibold">Introduction</span>
             <p className="text-[14px] opacity-80 leading-7">
               Hostelstay.com Hostel is an organization that provides IT and
               practical assistance to business executives and parents! It helps
@@ -60,7 +63,7 @@ const Aboutus = () => {
             <img
               src={namaste}
               alt="Greeting with hands"
-              className="h-[80vh] mt-10 ml-5 opacity-50 blur-[0.5px]"
+              className="h-[80vh] mt-24 ml-5 opacity-50 blur-[0.5px]"
             />
           </div>
         </div>
