@@ -7,7 +7,7 @@ export default function () {
         <div
           // src={hostel}
           // alt="Hostel image with hostelers"
-          className="w-full h-96 bg-contain bg-[url('/images/hostel.jpg')] bg-black opacity-30 blur-sm"
+          className="w-full h-96 bg-contain bg-[url('./images/hostel.jpg')] bg-black opacity-30 blur-sm"
         ></div>
 
         <h1 className="text-5xl font-bold centered text-seto">

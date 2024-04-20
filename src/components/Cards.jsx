@@ -13,14 +13,16 @@ export default function Cards({
 }) {
   return (
     <>
-      <section className="flex flex-col gap-5 mt-3 mb-3 px-3">
-        <div className="card rounded-xl w-64 h-96  px-3 py-3">
+      <section className="flex flex-col gap-5 px-3 mt-3 mb-3">
+        <div className="w-64 px-3 py-3 card rounded-xl h-96">
           <img
             src={image}
             alt="Boys hostel image"
-            className="align-center w-auto h-44 rounded-3xl ml-10"
+            className="w-auto ml-10 align-center h-44 rounded-3xl"
           />
-          <h2 className="text-center mt-3 text-3xl font-bold">{name}</h2>
+          <h2 className="mt-3 text-3xl font-bold text-center font-robot">
+            {name}
+          </h2>
           <div className="mt-8 text-lg font-semibold">
             <p className="flex items-center gap-2">
               <LocationOnIcon />

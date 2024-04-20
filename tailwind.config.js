@@ -11,6 +11,9 @@ export default {
         x: "#1da1f2",
         youtube: "#c4302b",
       },
+      fontFamily: {
+        robot: ["Roboto"],
+      },
     },
   },
   plugins: [],
