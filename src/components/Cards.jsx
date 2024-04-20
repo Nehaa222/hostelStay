@@ -17,16 +17,9 @@ export default function Cards({
       <section className="flex flex-col gap-5 px-3 mt-3 mb-3">
         <div className="w-64 px-3 py-4 card rounded-xl h-[auto]">
           <AspectRatio minHeight="120px" maxHeight="200px">
-            <img
-              src={image}
-              loading="lazy"
-              alt=""
-              className="rounded-2xl"
-            />
+            <img src={image} loading="lazy" alt="" className="rounded-2xl" />
           </AspectRatio>
-          <h2 className="mt-3 text-3xl font-bold text-center font-robot">
-            {name}
-          </h2>
+          <h2 className="mt-3 text-3xl font-bold text-center">{name}</h2>
           <div className="mt-8 text-lg font-semibold">
             <p className="flex items-center gap-2">
               <LocationOnIcon />

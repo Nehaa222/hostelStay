@@ -1,12 +1,11 @@
 import React from "react";
 import namaste from "../images/namaste.jpg";
-console.log(namaste);
 const Aboutus = () => {
   return (
     <div>
       <div className="mt-0 bg-black searchSection">
         <div
-          // alt="Hostel image with hostelers"
+          alt="Hostel image with hostelers"
           className="w-full h-[350px] bg-contain bg-[url('./images/about.png')] bg-black opacity-50 blur-sm"
         ></div>
 
