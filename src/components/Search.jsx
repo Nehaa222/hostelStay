@@ -18,7 +18,7 @@ export default function () {
         </h1>
       </div>
       <form className="flex items-center h-24 mt-4 bg-black justify-evenly">
-        <HomeWorkIcon className="text-yellow-500" />
+        <HomeWorkIcon className="text-[#3975A7]" fontSize="large" />
         <span className="flex flex-col text-xl ">
           <big className="font-bold text-white">
             Search <br />

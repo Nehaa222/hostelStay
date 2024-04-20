@@ -5,10 +5,11 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <>
-      <footer className="mt-3 bg-[#3975A7] py-10 px-8 w-max-full h-fit text-seto flex">
+      <footer className="mt-0 bg-[#3975A7] py-10 px-8 w-max-full h-fit text-seto flex">
         <aside className="flex flex-col items-start gap-6">
           <h1 className="text-3xl leading-loose tracking-widest">
             Hostel Stay
@@ -33,7 +34,7 @@ export default function Footer() {
             is our success"
           </small>
           <button className="px-3 py-1 text-lg font-semibold transition ease-in-out delay-150 border-2 border-solid border-seto hover:bg-seto hover:text-black rounded-xl">
-            Read more
+            <Link to="/about">Read more</Link>
           </button>
         </aside>
         <hr className="ml-8 border-2 border-dashed border-seto min-h-96" />
@@ -103,10 +104,22 @@ export default function Footer() {
             <div className="flex flex-col items-center ml-10">
               <h1 className="text-xl font-semibold">Social Media</h1>
               <div className="flex gap-4 py-5 ">
-                <FacebookIcon className="cursor-pointer hover:text-facebook" />
-                <InstagramIcon className="cursor-pointer hover:text-instagram" />
-                <XIcon className="cursor-pointer hover:text-x" />
-                <YouTubeIcon className="border-solid cursor-pointer hover:text-youtube" />
+                <FacebookIcon
+                  className="cursor-pointer hover:text-facebook"
+                  fontSize="large"
+                />
+                <InstagramIcon
+                  className="cursor-pointer hover:text-instagram"
+                  fontSize="large"
+                />
+                <XIcon
+                  className="cursor-pointer hover:text-x"
+                  fontSize="large"
+                />
+                <YouTubeIcon
+                  className="border-solid cursor-pointer hover:text-youtube"
+                  fontSize="large"
+                />
               </div>
               <p className="text-xl font-semibold">Contact Us</p>
             </div>
@@ -114,7 +127,8 @@ export default function Footer() {
         </main>
       </footer>
       <p className="pb-5 text-center bg-[#3975A7] text-xm text-seto">
-        Copyright © 2024 Hostel Stay Pvt. Ltd Designs & Developed by Shahash.
+        Copyright © {new Date().getFullYear()} Hostel Stay Pvt. Ltd Designs &
+        Developed by Shahash.
       </p>
     </>
   );

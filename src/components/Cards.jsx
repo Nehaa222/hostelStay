@@ -2,6 +2,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import AspectRatio from "@mui/joy/AspectRatio";
 
 export default function Cards({
   name,
@@ -14,12 +15,15 @@ export default function Cards({
   return (
     <>
       <section className="flex flex-col gap-5 px-3 mt-3 mb-3">
-        <div className="w-64 px-3 py-3 card rounded-xl h-96">
-          <img
-            src={image}
-            alt="Boys hostel image"
-            className="w-auto ml-10 align-center h-44 rounded-3xl"
-          />
+        <div className="w-64 px-3 py-4 card rounded-xl h-[auto]">
+          <AspectRatio minHeight="120px" maxHeight="200px">
+            <img
+              src={image}
+              loading="lazy"
+              alt=""
+              className="rounded-2xl"
+            />
+          </AspectRatio>
           <h2 className="mt-3 text-3xl font-bold text-center font-robot">
             {name}
           </h2>
