@@ -130,7 +130,7 @@ export default function SignUp() {
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid item className="flex gap-2">
+              <Grid item className="flex justify-center w-full gap-2">
                 <p>Already have an account?</p>
                 <Link
                   to="/login"

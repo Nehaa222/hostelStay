@@ -1,5 +1,6 @@
 import hostel from "../images/hostel.jpg";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
+import { Link } from "react-router-dom";
 export default function () {
   return (
     <>
@@ -18,7 +19,7 @@ export default function () {
         </h1>
       </div>
       <form className="flex items-center h-24 mt-4 bg-black justify-evenly">
-        <HomeWorkIcon className="text-yellow-500" fontSize="large"/>
+        <HomeWorkIcon className="text-yellow-500" fontSize="large" />
         <span className="flex flex-col text-xl ">
           <big className="font-bold text-white">
             Search <br />
@@ -26,12 +27,21 @@ export default function () {
           </big>
         </span>
         <input type="text" placeholder="Enter hostel name" />
-        <input type="text" placeholder="district" className="" />
-        <input type="text" placeholder="Location" />
-        <input type="text" placeholder="Hostel type" />
-        <button className="px-4 py-3 text-lg font-bold bg-[#91B8d9] rounded-lg">
-          Search
-        </button>
+        <select name="location" id="" className="h-12 px-5 rounded-xl">
+          <option value="">Location</option>
+          <option value="">Kathmandu</option>
+          <option value="">Lalitpur</option>
+        </select>
+        <select name="Type" id="" className="h-12 px-5 rounded-xl">
+          <option value="">Type</option>
+          <option value="">Boys</option>
+          <option value="">Girls</option>
+        </select>
+        <Link to="/">
+          <button className="px-4 py-3 text-lg font-bold bg-[#91B8d9] rounded-lg">
+            Search
+          </button>
+        </Link>
       </form>
     </>
   );
