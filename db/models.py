@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from passlib.context import CryptContext
+from typing import Optional
 #data model for users signup
 class UserSignup(BaseModel):
     username:str
@@ -42,3 +43,10 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str | None = None
+
+
+#data model for beds
+class Beds(BaseModel):
+    name: str
+    hostel_id: str
+    status: Optional[str] = "available"

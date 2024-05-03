@@ -10,3 +10,4 @@ client=pymongo.MongoClient(host=mongo_url)
 db=client["hostel"]
 hostel_collection=db["hostels"]
 user_collection = db["users"]
+beds_collection=db["beds"]

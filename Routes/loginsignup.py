@@ -10,7 +10,7 @@ from db.models import UserLogin,UserSignup
 from auth.auth import OAuth2PasswordBearer,OAuth2PasswordRequestForm,authenticate_user,get_current_active_user,create_access_token,ACCESS_TOKEN_EXPIRE_MINUTES,get_password_hash
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
-login_signup=APIRouter()
+login_signup=APIRouter(tags=["authentication"])
 
 
 @login_signup.post("/token")

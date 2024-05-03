@@ -5,13 +5,15 @@ from bson.objectid import ObjectId
 from db.models import User
 from auth.auth import get_current_user,get_current_active_user
 from typing import Annotated
+from fastapi.encoders import jsonable_encoder
+from bson import json_util
+import json
 hostel_router = APIRouter(tags=["hostels"])
 
 @hostel_router.get("/hostels")
-def get_hostels( current_user: Annotated[User, Depends(get_current_active_user)]):
-
-    hostels=list(hostel_collection.find({},{"_id":0}))
-    return hostels
+def get_hostels(current_user: Annotated[User, Depends(get_current_active_user)]):
+    hostels = list(hostel_collection.find({}))
+    return  json.loads(json_util.dumps(hostels))
     
 
 @hostel_router.post("/hostels")
