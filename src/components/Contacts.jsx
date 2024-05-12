@@ -35,11 +35,11 @@ const Contacts = () => {
           </div>
           <div className="flex flex-col items-center gap-5 text-xl font-semibold text-seto">
             <CiMail className="text-5xl" />
-            <p className="text-lg font-semibold">shahashshahi2059@gmail.com</p>
+            <p className="text-lg font-semibold">hostelmanagementsystem10@gmail.com</p>
           </div>
           <div className="flex flex-col items-center gap-5 text-xl font-semibold text-seto">
             <BsTelephone className="text-5xl" />
-            <p className="text-lg font-semibold">9866200051</p>
+            <p className="text-lg font-semibold">014567891</p>
           </div>
         </div>
       </div>

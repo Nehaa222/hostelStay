@@ -7,6 +7,7 @@ import Loginpage from "./pages/Loginpage";
 import Signuppage from "./pages/Signuppage";
 import Hostelpage from "./pages/Hostelpage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 const App = () => {
   return (
     <>
