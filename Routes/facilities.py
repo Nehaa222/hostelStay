@@ -36,4 +36,3 @@ def delete_hostel(hostel_id:str):
     return {
         "message":"Successfully deleted"
     }
-    

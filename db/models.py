@@ -15,10 +15,8 @@ class UserLogin(BaseModel):
 #data model for hostel
 class Hostel(BaseModel):
     name : str
-    address: str
-    email : str 
-    phone : str 
-    status : str 
+    location:str
+    phoneNumber:str
 
 #data model for rooms 
 class Rooms(BaseModel):
@@ -47,6 +45,19 @@ class TokenData(BaseModel):
 
 #data model for beds
 class Beds(BaseModel):
-    name: str
+    roomType:str
     hostel_id: str
+    Price:str
+    availableBeds:str
     status: Optional[str] = "available"
+
+class Facilities(BaseModel):
+    hostel_id:str
+    facility_name:str
+
+class Bookings(BaseModel):
+    hostel_id:str
+    bed_id:str
+    user_id:str
+    status: Optional[str] = "pending"
+    
