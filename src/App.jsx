@@ -7,7 +7,8 @@ import React from "react";
 // import Signuppage from "./pages/Signuppage";
 // import Hostelpage from "./pages/Hostelpage";
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminDashboard from "./components/AdminDashboard";
+// import AdminDashboard from "./components/AdminDashboard";
+import Booking from "./components/Booking";
 const App = () => {
   return (
     // <>
@@ -23,7 +24,8 @@ const App = () => {
     //     </Routes>
     //   </BrowserRouter>
     // </>
-    <AdminDashboard/>
+    // <AdminDashboard/>
+    <Booking/>
   );
 };
 
