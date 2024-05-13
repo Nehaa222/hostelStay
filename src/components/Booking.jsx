@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { TfiDashboard } from "react-icons/tfi";
 import { MdMapsHomeWork } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 export default function Booking() {
   const [activeTab, setActiveTab] = useState("today");
@@ -26,10 +26,15 @@ export default function Booking() {
     <div className="Container ">
       <div className="flex h-full w-full cursor-pointer">
         <div className="sidebar bg-[#D9D9D9] text-black p-5 w-[40%] font-bold text-[20px] flex flex-col items-center h-screen">
-          <div className="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
-            <TfiDashboard className="mr-[22px]" />
-            <span>Dashboard</span>
+          
+          <div class="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
+            <Link to="/" className="flex items-center">
+              <TfiDashboard class="mr-[22px]" />
+              <span>Dashboard</span>
+            </Link>
           </div>
+
+
           <div className="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
             <FaHome className="mr-[22px]" />
             <span>Booking</span>
@@ -48,8 +53,8 @@ export default function Booking() {
           </div>
         </div>
         <div className="container flex flex-col ml-[28%] Shadow-md ">
-          <p className="font-bold text-3xl ml-[100px]">BOOKING DETAIL</p> 
-          <div className="tabs mt-[30px]"> 
+          <p className="font-bold text-3xl ml-[100px]">BOOKING DETAIL</p>
+          <div className="tabs mt-[30px]">
             <button
               className={`tab ${
                 activeTab === "today"

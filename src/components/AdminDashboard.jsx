@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { TfiDashboard } from "react-icons/tfi";
 import { MdMapsHomeWork } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import {
   Button,
   Paper,
@@ -15,6 +15,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+
 function createRequest(id, requestedBy, hostelName, selectedBed) {
   return { id, requestedBy, hostelName, selectedBed };
 }
@@ -31,7 +32,6 @@ export default function AdminDashboard() {
     createRequest(8, "Digvijay Rathee", "Laxmi Hostel", "Single"),
     createRequest(9, "Ashish kc", "Laxmi Hostel", "Double"),
     createRequest(10, "Jasmin Lama", "Laxmi Hostel", "Single"),
-    // Add more requests as needed
   ]);
 
   // Handlers to accept or decline the request
@@ -53,10 +53,14 @@ export default function AdminDashboard() {
             <TfiDashboard class="mr-[22px]" />
             <span>Dashboard</span>
           </div>
+
           <div class="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
-            <FaHome class="mr-[22px]" />
-            <span>Booking</span>
+            <Link to="/Booking" className="flex items-center">
+              <FaHome class="mr-[22px]" />
+              <span>Booking</span>
+            </Link>
           </div>
+
           <div class="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
             <MdMapsHomeWork class="mr-[22px]" />
             <span>Hostel List</span>
