@@ -45,7 +45,7 @@ class TokenData(BaseModel):
 
 #data model for beds
 class Beds(BaseModel):
-    roomType:str
+    bedType:str
     hostel_id: str
     Price:str
     availableBeds:str
