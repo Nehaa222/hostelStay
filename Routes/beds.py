@@ -25,7 +25,7 @@ def get_beds(hostel_id:str):
 def create_beds(bed:Beds,current_user: Annotated[User, Depends(get_current_active_user)]):
     
     beds=beds_collection.insert_one({
-        "name":bed.name,
+        "name":bed.bedType,
         "status":bed.status,
         "hostel_id":bed.hostel_id
     })
