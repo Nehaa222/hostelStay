@@ -1,101 +1,3 @@
-// import React, { useState } from "react";
-// import { FaHome } from "react-icons/fa";
-// import { TfiDashboard } from "react-icons/tfi";
-// import { MdMapsHomeWork } from "react-icons/md";
-// import { FaRegUserCircle } from "react-icons/fa";
-// import { IoLogOut } from "react-icons/io5";
-// import { Link } from "react-router-dom";
-
-// export default function Booking() {
-//   const [activeTab, setActiveTab] = useState("today");
-
-//   const displayContent = () => {
-//     switch (activeTab) {
-//       case "today":
-//         return "Booked for Amrit";
-//       case "week":
-//         return "Booked by Raj";
-//       case "month":
-//         return "Booked by Quyem";
-//       default:
-//         return "Select a tab to display bookings";
-//     }
-//   };
-
-//   return (
-//     <div className="Container ">
-//       <div className="flex h-full w-full cursor-pointer">
-//         <div className="sidebar bg-[#D9D9D9] text-black p-5 w-[40%] font-bold text-[20px] flex flex-col items-center h-screen">
-          
-//           <div class="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
-//             <Link to="/" className="flex items-center">
-//               <TfiDashboard class="mr-[22px]" />
-//               <span>Dashboard</span>
-//             </Link>
-//           </div>
-
-
-//           <div className="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
-//             <FaHome className="mr-[22px]" />
-//             <span>Booking</span>
-//           </div>
-//           <div className="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
-//             <MdMapsHomeWork className="mr-[22px]" />
-//             <span>Hostel List</span>
-//           </div>
-//           <div className="menu-item mt-10 mb-4 w-full flex items-center justify-start pl-5">
-//             <FaRegUserCircle className="mr-[22px]" />
-//             <span>My Profile</span>
-//           </div>
-//           <div className="menu-item mt-10 w-full flex items-center justify-start pl-5">
-//             <IoLogOut className="mr-[22px]" />
-//             <span>Logout</span>
-//           </div>
-//         </div>
-//         <div className="container flex flex-col ml-[28%] Shadow-md ">
-//           <p className="font-bold text-3xl ml-[100px]">BOOKING DETAIL</p>
-//           <div className="tabs mt-[30px]">
-//             <button
-//               className={`tab ${
-//                 activeTab === "today"
-//                   ? "active bg-blue-500 text-white"
-//                   : "bg-gray-100 text-gray-800"
-//               } hover:bg-blue-300 px-4 py-2 rounded shadow mr-2`}
-//               onClick={() => setActiveTab("today")}
-//             >
-//               Today's booking
-//             </button>
-//             <button
-//               className={`tab ${
-//                 activeTab === "week"
-//                   ? "active bg-blue-500 text-white"
-//                   : "bg-gray-100 text-gray-800"
-//               } hover:bg-blue-300 px-4 py-2 rounded shadow mr-2`}
-//               onClick={() => setActiveTab("week")}
-//             >
-//               This week's booking
-//             </button>
-//             <button
-//               className={`tab ${
-//                 activeTab === "month"
-//                   ? "active bg-blue-500 text-white"
-//                   : "bg-gray-100 text-gray-800"
-//               } hover:bg-blue-300 px-4 py-2 rounded shadow mr-2`}
-//               onClick={() => setActiveTab("month")}
-//             >
-//               This month's booking
-//             </button>
-//           </div>
-
-//           <div className="content mt-[50px] h-[350px] w-[70%] bg-green-400">
-//             {displayContent()}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { TfiDashboard } from "react-icons/tfi";
@@ -106,19 +8,19 @@ import { Link } from "react-router-dom";
 
 const bookings = {
   today: [
-    { id: 1, name: "Amrit", hostelName: "Sunrise Hostel", email: "amrit@example.com", phone: "123-456-7890" },
-    { id: 2, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", phone: "123-456-7891" },
-    { id: 3, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", phone: "123-456-7891" },
-    { id: 4, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", phone: "123-456-7891" },
-    { id: 5, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", phone: "123-456-7891" },
+    { id: 1, name: "Amrit", hostelName: "Sunrise Hostel", email: "amrit@example.com", selectedBed: "Single" },
+    { id: 2, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", selectedBed: "Double" },
+    { id: 3, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", selectedBed: "Single" },
+    { id: 4, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", selectedBed: "Double" },
+    { id: 5, name: "Nina", hostelName: "Sunrise Hostel", email: "nina@example.com", selectedBed: "Single" },
   ],
   week: [
-    { id: 6, name: "Raj", hostelName: "Moonlight Hostel", email: "raj@example.com", phone: "123-456-7892" },
-    { id: 7, name: "Alex", hostelName: "Moonlight Hostel", email: "alex@example.com", phone: "123-456-7893" },
+    { id: 6, name: "Raj", hostelName: "Moonlight Hostel", email: "raj@example.com", selectedBed: "Single" },
+    { id: 7, name: "Alex", hostelName: "Moonlight Hostel", email: "alex@example.com", selectedBed: "Double" },
   ],
   month: [
-    { id: 8, name: "Quyem", hostelName: "Starlight Hostel", email: "quyem@example.com", phone: "123-456-7894" },
-    { id: 9, name: "John", hostelName: "Starlight Hostel", email: "john@example.com", phone: "123-456-7895" },
+    { id: 8, name: "Quyem", hostelName: "Starlight Hostel", email: "quyem@example.com", selectedBed: "Double" },
+    { id: 9, name: "John", hostelName: "Starlight Hostel", email: "john@example.com", selectedBed: "Single" },
   ],
 };
 
@@ -138,8 +40,7 @@ export default function Booking() {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hostel Name</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Selected Beds</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -148,8 +49,7 @@ export default function Booking() {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.id}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.name}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.hostelName}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.email}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.phone}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.selectedBed}</td>
             </tr>
           ))}
         </tbody>
