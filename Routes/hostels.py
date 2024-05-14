@@ -8,7 +8,7 @@ from typing import Annotated
 from fastapi.encoders import jsonable_encoder
 from bson import json_util
 import json
-hostel_router = APIRouter(tags=["hostels"])
+hostel_router = APIRouter(tags=["hostels"]) #creating a route for hostels
 
 @hostel_router.get("/hostels")
 def get_hostels():

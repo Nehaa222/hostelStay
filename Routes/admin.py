@@ -17,7 +17,8 @@ from datetime import datetime, timedelta
 
 load_dotenv()
 
-admin_router = APIRouter(tags=["admin"])
+admin_router = APIRouter(tags=["admin"]) #creating route for admin dashboard
+#all the operations of admin are below
 
 
 @admin_router.get("/admin/hostels")

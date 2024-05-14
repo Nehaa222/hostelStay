@@ -13,7 +13,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from bson.objectid import ObjectId
 
-beds_router=APIRouter()
+beds_router=APIRouter() #creating route for beds
 
 @beds_router.get("/beds")
 def get_beds(hostel_id:str):
