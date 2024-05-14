@@ -74,3 +74,41 @@ def read_own_items(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
     return [{"item_id": "Foo", "owner": current_user.username}]
+
+
+
+from pydantic import BaseModel, EmailStr, Field
+
+# Define a request model for updating user profiles
+class UserUpdate(BaseModel):
+    username: str = Field(None, min_length=1, max_length=50)
+    email: EmailStr
+    password: str = Field(None, min_length=8, max_length=50)
+
+@login_signup.put("/users/me/update")
+def update_user_profile(
+    profile_data: UserUpdate,  # Request model for updating user profiles
+    current_user: User = Depends(get_current_active_user),  # Requires authentication
+):
+    # Get the current user's username
+    username = current_user.username
+    
+    # Update user profile in the database
+    update_fields = {}
+    if profile_data.username:
+        update_fields["username"] = profile_data.username
+    if profile_data.email:
+        update_fields["email"] = profile_data.email
+    if profile_data.password:
+        update_fields["hashed_password"] = get_password_hash(profile_data.password)
+
+    result = user_collection.update_one(
+        {"username": username},
+        {"$set": update_fields}
+    )
+    
+    # Check if the update was successful
+    if result.modified_count == 1:
+        return {"success": True, "message": "User profile updated successfully"}
+    else:
+        return {"success": False, "message": "Failed to update user profile"}
