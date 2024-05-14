@@ -45,7 +45,7 @@ function SignIn() {
 
       const data = await resp.json();
       login(data.access_token);
-      navigate("/"); // Navigate to homepage after successful login
+      navigate("/hostel-list"); // Navigate to homepage after successful login
     } catch (error) {
       setError("Invalid credentials");
     }
