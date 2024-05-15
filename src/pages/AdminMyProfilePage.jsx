@@ -1,16 +1,12 @@
-<<<<<<< HEAD
-=======
 import DashboardNav from "../admin/DashboardNav";
 import { Input, Button } from "@nextui-org/react";
->>>>>>> 773d6bf8692d1bfdbb662a3ea8c9ac1b6ec1828f
 import { useState } from "react";
-import { Input, Button } from "@nextui-org/react";
 import { MailIcon } from "../components/MailIcon";
 import { EyeSlashFilledIcon } from "../components/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "../components/EyeFilledIcon";
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { useAuth, login } from "../providers/authProvider";
+import { useAuth } from "../providers/authProvider"; // Removed unnecessary import 'login'
 import Admin from "../admin/Admin";
 
 function AdminMyProfilePage() {
