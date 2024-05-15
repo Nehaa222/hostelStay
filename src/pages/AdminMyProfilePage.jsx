@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import DashboardNav from "../admin/DashboardNav";
+import { Input, Button } from "@nextui-org/react";
+>>>>>>> 773d6bf8692d1bfdbb662a3ea8c9ac1b6ec1828f
 import { useState } from "react";
 import { Input, Button } from "@nextui-org/react";
 import { MailIcon } from "../components/MailIcon";
@@ -51,7 +56,7 @@ function AdminMyProfilePage() {
 
   return (
     <div className="flex gap-10">
-      <Admin />
+      <DashboardNav />
       <div className="flex flex-col w-full">
         <div className="flex justify-between w-full mt-14">
           <h1 className="text-2xl font-thin">User Account Settings</h1>
