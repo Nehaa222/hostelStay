@@ -56,8 +56,8 @@ class Facilities(BaseModel):
     facility_name:str
 
 class Bookings(BaseModel):
-    hostel_id:str
-    bed_id:str
-    user_id:str
-    status: Optional[str] = "pending"
+    booking_id:str
+    name:str
+    hostelName:str
+    selectedBed:str
     

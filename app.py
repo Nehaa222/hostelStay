@@ -23,3 +23,4 @@ app.include_router(hostel_router)
 app.include_router(login_signup)
 app.include_router(beds_router)
 app.include_router(admin_router)
+

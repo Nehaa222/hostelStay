@@ -86,7 +86,7 @@ def get_current_active_user(
 def get_current_admin_user(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
-    admins=["jrdinesh1@gmail.com","sahash10@gmail.com"]
+    admins=["jrdinesh1@gmail.com"]
     if current_user.email not in admins:
         raise HTTPException(status_code=400, detail="Not an admin")
     return current_user

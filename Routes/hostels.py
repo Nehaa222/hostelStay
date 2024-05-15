@@ -21,10 +21,9 @@ def create_hostel(hostel:Hostel,current_user: Annotated[User, Depends(get_curren
     
     hostels=hostel_collection.insert_one({
         "name":hostel.name,
-        "address":hostel.address,
-        "email":hostel.email,
-        "phone":hostel.phone,
-        "status":hostel.status
+        "location":hostel.location,
+        "phoneNumber":hostel.phoneNumber,
+        
     })
     return {
         "message":"Successfully Created Hostel!"

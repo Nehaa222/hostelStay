@@ -20,6 +20,14 @@ load_dotenv()
 admin_router = APIRouter(tags=["admin"]) #creating route for admin dashboard
 #all the operations of admin are below
 
+#admin hostel routes
+@admin_router.post("/admin/hostels")
+def create_hostel(new_hostel_data: Hostel, current_user: User = Depends(get_current_admin_user)):
+    # Assuming new_hostel_data is a Pydantic model representing the structure of a hostel
+    new_hostel = hostel_collection.insert_one(new_hostel_data.dict())
+    if not new_hostel.inserted_id:
+        raise HTTPException(status_code=500, detail="Failed to create hostel")
+    return {"message": "Hostel created successfully", "hostel_id": str(new_hostel.inserted_id)}
 
 @admin_router.get("/admin/hostels")
 def get_all_hostels(current_user: User = Depends(get_current_admin_user)):
@@ -49,32 +57,55 @@ def delete_hostel(hostel_id: str, current_user: User = Depends(get_current_admin
 
 
 
-@admin_router.get("/admin/bookings")
-def get_all_bookings(current_user: User = Depends(get_current_admin_user)):
-    bookings = list(bookings_collection.find({}))
-    return json.loads(json_util.dumps(bookings))
+#admin booking routes
 
-@admin_router.get("/admin/bookings/{booking_id}")
-def get_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
-    booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
-    if not booking:
-        raise HTTPException(status_code=404, detail="Booking not found")
-    return json.loads(json_util.dumps(booking))
 
-@admin_router.put("/admin/bookings/{booking_id}")
-def update_booking(booking_id: str, new_booking_data: Bookings, current_user: User = Depends(get_current_admin_user)):
-    updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": new_booking_data.dict()})
-    if updated_booking.modified_count == 0:
-        raise HTTPException(status_code=404, detail="Booking not found")
-    return {"message": "Booking updated successfully"}
+# @admin_router.get("/admin/bookings")
+# def get_all_bookings(current_user: User = Depends(get_current_admin_user)):
+#     bookings = list(bookings_collection.find({}))
+#     return json.loads(json_util.dumps(bookings))
 
-@admin_router.delete("/admin/bookings/{booking_id}")
-def delete_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
-    deleted_booking = bookings_collection.delete_one({"_id": ObjectId(booking_id)})
-    if deleted_booking.deleted_count == 0:
-        raise HTTPException(status_code=404, detail="Booking not found")
-    return {"message": "Booking deleted successfully"}
+# @admin_router.get("/admin/bookings/{booking_id}")
+# def get_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
+#     booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
+#     if not booking:
+#         raise HTTPException(status_code=404, detail="Booking not found")
+#     return json.loads(json_util.dumps(booking))
 
+# @admin_router.put("/admin/bookings/{booking_id}")
+# def update_booking(booking_id: str, new_booking_data: Bookings, current_user: User = Depends(get_current_admin_user)):
+#     updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": new_booking_data.dict()})
+#     if updated_booking.modified_count == 0:
+#         raise HTTPException(status_code=404, detail="Booking not found")
+#     return {"message": "Booking updated successfully"}
+
+# @admin_router.delete("/admin/bookings/{booking_id}")
+# def delete_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
+#     deleted_booking = bookings_collection.delete_one({"_id": ObjectId(booking_id)})
+#     if deleted_booking.deleted_count == 0:
+#         raise HTTPException(status_code=404, detail="Booking not found")
+#     return {"message": "Booking deleted successfully"}
+
+@admin_router.post("/admin/bookings/add")
+async def add_booking(booking: Bookings, current_user: User = Depends(get_current_admin_user)):
+    """
+    Add a new booking.
+    """
+    # Ensure that the booking start date is in the future
+    if booking.check_in_date < datetime.now():
+        raise HTTPException(status_code=400, detail="Booking start date must be in the future")
+
+    # Convert check_in_date and check_out_date to ISO format
+    booking.check_in_date = booking.check_in_date.isoformat()
+    booking.check_out_date = booking.check_out_date.isoformat()
+
+    # Insert the booking into the database
+    inserted_booking = await bookings_collection.insert_one(booking.dict())
+    
+    # Fetch the inserted booking from the database
+    new_booking = await bookings_collection.find_one({"_id": inserted_booking.inserted_id})
+    
+    return new_booking
 
 @admin_router.get("/admin/bookings/day")
 def get_bookings_for_day(current_user: User = Depends(get_current_admin_user)):
@@ -104,39 +135,43 @@ def get_bookings_for_month(current_user: User = Depends(get_current_admin_user))
     return json.loads(json_util.dumps(bookings))
 
 # Get total number of hostels
-@admin_router.get("/admin/hostels/total")
+@admin_router.get("/admin/hostels/totalhostels", response_model=dict)
 def get_total_hostels(current_user: User = Depends(get_current_admin_user)):
+    # Return total number of hostels
     total_hostels = hostel_collection.count_documents({})
-    return {"total_hostels": total_hostels}
+    return {"totalHostels": total_hostels}
 
 # Get total number of bookings
-@admin_router.get("/admin/bookings/total")
+@admin_router.get("/admin/bookings", response_model=dict)
 def get_total_bookings(current_user: User = Depends(get_current_admin_user)):
+    # Return total number of bookings
     total_bookings = bookings_collection.count_documents({})
-    return {"total_bookings": total_bookings}
+    return {"totalBookings": total_bookings}
 
-# Accept booking request
-@admin_router.put("/admin/bookings/accept/{booking_id}")
+@admin_router.get("/admin/allbookings")
+def get_all_bookings(current_user: User = Depends(get_current_admin_user)):
+    # Return all bookings
+    all_bookings = list(bookings_collection.find({}))
+    return all_bookings
+
+@admin_router.put("/admin/bookings/{booking_id}/accept")
 def accept_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
-    booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
-    if not booking:
+    # Accept a booking by updating its status
+    result = bookings_collection.update_one(
+        {"_id": ObjectId(booking_id)},
+        {"$set": {"status": "Accepted"}}
+    )
+    if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Booking not found")
-
-    # Perform necessary actions to accept the booking, e.g., update status in the database
-    # Assuming you have a field named 'status' in your Bookings model, you can update it to 'accepted'
-    updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": {"status": "accepted"}})
-
     return {"message": "Booking accepted successfully"}
 
-# Decline booking request
-@admin_router.put("/admin/bookings/decline/{booking_id}")
+@admin_router.put("/admin/bookings/{booking_id}/decline")
 def decline_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
-    booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
-    if not booking:
+    # Decline a booking by updating its status
+    result = bookings_collection.update_one(
+        {"_id": ObjectId(booking_id)},
+        {"$set": {"status": "Declined"}}
+    )
+    if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Booking not found")
-
-    # Perform necessary actions to decline the booking, e.g., update status in the database
-    # Assuming you have a field named 'status' in your Bookings model, you can update it to 'declined'
-    updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": {"status": "declined"}})
-
     return {"message": "Booking declined successfully"}
