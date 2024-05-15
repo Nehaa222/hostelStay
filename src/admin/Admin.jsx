@@ -1,46 +1,90 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
-import { TfiDashboard } from "react-icons/tfi";
-import { MdMapsHomeWork } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
-import { IoLogOut } from "react-icons/io5";
+import React, { useState, useEffect } from "react";
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import DashboardNav from "./DashboardNav";
-import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-
-function createRequest(id, requestedBy, hostelName, selectedBed) {
-  return { id, requestedBy, hostelName, selectedBed };
-}
+import { MdMapsHomeWork } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
 
 export default function Admin() {
-  const [requests, setRequests] = useState([
-    createRequest(1, "Uttam Magar", "Laxmi Hostel", "Single"),
-    createRequest(2, "Prashant Kc ", "Laxmi Hostel", "Double"),
-    createRequest(3, "Chepang Lama", "Laxmi Hostel", "Single"),
-    createRequest(4, "Samir Acharya", "Laxmi Hostel", "Single"),
-    createRequest(5, "Ram Limbu", "Laxmi Hostel", "Double"),
-    createRequest(6, "Raz Rizal", "Laxmi Hostel", "Single"),
-    createRequest(7, "Dinesh Singh", "Laxmi Hostel", "Single"),
-    createRequest(8, "Digvijay Rathee", "Laxmi Hostel", "Single"),
-    createRequest(9, "Ashish Kc", "Laxmi Hostel", "Double"),
-    createRequest(10, "Jasmin Lama", "Laxmi Hostel", "Single"),
-  ]);
+  const [totalHostels, setTotalHostels] = useState(0);
+  const [totalBookings, setTotalBookings] = useState(0);
+  const [requests, setRequests] = useState([]);
 
-  const handleAccept = (id) => {
-    console.log("Accepted request with ID:", id);
+  useEffect(() => {
+    fetchTotalHostels();
+    fetchTotalBookings();
+    fetchAllBookings();
+  }, []);
+
+  const fetchTotalHostels = async () => {
+    try {
+      const response = await fetch("https://hostelstay.onrender.com/admin/hostels/count");
+      if (response.ok) {
+        const data = await response.json();
+        setTotalHostels(data.totalHostels);
+      } else {
+        console.error("Failed to fetch total hostels");
+      }
+    } catch (error) {
+      console.error("Error fetching total hostels:", error);
+    }
   };
 
-  const handleDecline = (id) => {
-    console.log("Declined request with ID:", id);
+  const fetchTotalBookings = async () => {
+    try {
+      const response = await fetch("https://hostelstay.onrender.com/admin/bookings/count");
+      if (response.ok) {
+        const data = await response.json();
+        setTotalBookings(data.totalBookings);
+      } else {
+        console.error("Failed to fetch total bookings");
+      }
+    } catch (error) {
+      console.error("Error fetching total bookings:", error);
+    }
+  };
+
+  const fetchAllBookings = async () => {
+    try {
+      const response = await fetch("https://hostelstay.onrender.com/admin/bookings");
+      if (response.ok) {
+        const data = await response.json();
+        setRequests(data.bookings);
+      } else {
+        console.error("Failed to fetch all bookings");
+      }
+    } catch (error) {
+      console.error("Error fetching all bookings:", error);
+    }
+  };
+
+  const handleAccept = async (id) => {
+    try {
+      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/accept`, {
+        method: "PUT",
+      });
+      if (response.ok) {
+        fetchAllBookings();
+      } else {
+        console.error("Failed to accept booking");
+      }
+    } catch (error) {
+      console.error("Error accepting booking:", error);
+    }
+  };
+
+  const handleDecline = async (id) => {
+    try {
+      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
+        method: "PUT",
+      });
+      if (response.ok) {
+        fetchAllBookings();
+      } else {
+        console.error("Failed to decline booking");
+      }
+    } catch (error) {
+      console.error("Error declining booking:", error);
+    }
   };
 
   return (
@@ -59,7 +103,7 @@ export default function Admin() {
                   <MdMapsHomeWork className="w-6 h-6" />
                   <span className="text-2xl font-bold">Total Hostel</span>
                 </div>
-                <p className="mt-4 text-6xl font-bold text-center">10</p>
+                <p className="mt-4 text-6xl font-bold text-center">{totalHostels}</p>
               </div>
             </div>
             <div className="card bg-purple-600 text-white p-3 w-1/4 flex flex-col justify-between rounded-lg shadow-md h-[170px]">
@@ -68,7 +112,7 @@ export default function Admin() {
                   <FaHome className="w-6 h-6" />
                   <span className="text-2xl font-bold">Total Booking</span>
                 </div>
-                <p className="mt-4 text-6xl font-bold text-center">122</p>
+                <p className="mt-4 text-6xl font-bold text-center">{totalBookings}</p>
               </div>
             </div>
           </div>
@@ -79,51 +123,22 @@ export default function Admin() {
                 <TableHead>
                   <TableRow>
                     <TableCell style={{ padding: "16px" }}>Id</TableCell>
-                    <TableCell style={{ padding: "16px" }}>
-                      Requested by
-                    </TableCell>
-                    <TableCell style={{ padding: "16px" }}>
-                      Hostel Name
-                    </TableCell>
-                    <TableCell style={{ padding: "16px" }}>
-                      Selected Bed
-                    </TableCell>
-                    <TableCell align="center" style={{ padding: "16px" }}>
-                      Actions
-                    </TableCell>
+                    <TableCell style={{ padding: "16px" }}>Requested by</TableCell>
+                    <TableCell style={{ padding: "16px" }}>Hostel Name</TableCell>
+                    <TableCell style={{ padding: "16px" }}>Selected Bed</TableCell>
+                    <TableCell align="center" style={{ padding: "16px" }}>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {requests.map((request) => (
                     <TableRow key={request.id}>
-                      <TableCell style={{ padding: "16px" }}>
-                        {request.id}
-                      </TableCell>
-                      <TableCell style={{ padding: "16px" }}>
-                        {request.requestedBy}
-                      </TableCell>
-                      <TableCell style={{ padding: "16px" }}>
-                        {request.hostelName}
-                      </TableCell>
-                      <TableCell style={{ padding: "16px" }}>
-                        {request.selectedBed}
-                      </TableCell>
+                      <TableCell style={{ padding: "16px" }}>{request.id}</TableCell>
+                      <TableCell style={{ padding: "16px" }}>{request.requestedBy}</TableCell>
+                      <TableCell style={{ padding: "16px" }}>{request.hostelName}</TableCell>
+                      <TableCell style={{ padding: "16px" }}>{request.selectedBed}</TableCell>
                       <TableCell align="center" style={{ padding: "16px" }}>
-                        <Button
-                          variant="contained"
-                          color="success"
-                          onClick={() => handleAccept(request.id)}
-                          style={{ marginRight: "8px" }}
-                        >
-                          Accept
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => handleDecline(request.id)}
-                        >
-                          Decline
-                        </Button>
+                        <Button variant="contained" color="success" onClick={() => handleAccept(request.id)} style={{ marginRight: "8px" }}>Accept</Button>
+                        <Button variant="contained" color="error" onClick={() => handleDecline(request.id)}>Decline</Button>
                       </TableCell>
                     </TableRow>
                   ))}

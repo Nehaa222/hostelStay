@@ -1,94 +1,38 @@
-import React, { useState } from "react";
-import { FaHome } from "react-icons/fa";
-import { TfiDashboard } from "react-icons/tfi";
+import React, { useState, useEffect } from "react";
+import { FaHome, FaRegUserCircle } from "react-icons/fa";
 import { MdMapsHomeWork } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
-import { IoLogOut } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import DashboardNav from "./DashboardNav";
-const bookings = {
-  today: [
-    {
-      id: 1,
-      name: "Amrit",
-      hostelName: "Sunrise Hostel",
-      email: "amrit@example.com",
-      selectedBed: "Single",
-    },
-    {
-      id: 2,
-      name: "Nina",
-      hostelName: "Sunrise Hostel",
-      email: "nina@example.com",
-      selectedBed: "Double",
-    },
-    {
-      id: 3,
-      name: "Nina",
-      hostelName: "Sunrise Hostel",
-      email: "nina@example.com",
-      selectedBed: "Single",
-    },
-    {
-      id: 4,
-      name: "Nina",
-      hostelName: "Sunrise Hostel",
-      email: "nina@example.com",
-      selectedBed: "Double",
-    },
-    {
-      id: 5,
-      name: "Nina",
-      hostelName: "Sunrise Hostel",
-      email: "nina@example.com",
-      selectedBed: "Single",
-    },
-  ],
-  week: [
-    {
-      id: 6,
-      name: "Raj",
-      hostelName: "Moonlight Hostel",
-      email: "raj@example.com",
-      selectedBed: "Single",
-    },
-    {
-      id: 7,
-      name: "Alex",
-      hostelName: "Moonlight Hostel",
-      email: "alex@example.com",
-      selectedBed: "Double",
-    },
-  ],
-  month: [
-    {
-      id: 8,
-      name: "Quyem",
-      hostelName: "Starlight Hostel",
-      email: "quyem@example.com",
-      selectedBed: "Double",
-    },
-    {
-      id: 9,
-      name: "John",
-      hostelName: "Starlight Hostel",
-      email: "john@example.com",
-      selectedBed: "Single",
-    },
-  ],
-};
 
 export default function Booking() {
+  const [bookings, setBookings] = useState([]);
   const [activeTab, setActiveTab] = useState("today");
 
+  useEffect(() => {
+    fetchBookings(activeTab);
+  }, [activeTab]);
+
+  const fetchBookings = async (tab) => {
+    try {
+      const response = await fetch(`https://hostelstay.onrender.com/bookings/${tab}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch bookings");
+      }
+      const data = await response.json();
+      setBookings(data);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  };
+
   const displayContent = () => {
-    const currentBookings = bookings[activeTab] || [];
-    if (currentBookings.length === 0) {
+    if (bookings.length === 0) {
       return "No bookings available";
     }
 
     return (
       <table className="min-w-full bg-white divide-y divide-gray-200 shadow-sm">
+        {/* Table header */}
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
@@ -105,8 +49,9 @@ export default function Booking() {
             </th>
           </tr>
         </thead>
+        {/* Table body */}
         <tbody className="bg-white divide-y divide-gray-200">
-          {currentBookings.map((booking) => (
+          {bookings.map((booking) => (
             <tr key={booking.id}>
               <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
                 {booking.id}
@@ -132,6 +77,7 @@ export default function Booking() {
       <DashboardNav />
       <div className="container flex flex-col items-center justify-start w-[80%] pt-6">
         <p className="mb-6 text-3xl font-bold">BOOKING DETAIL</p>
+        {/* Tab buttons */}
         <div className="mb-6 tabs">
           <button
             className={`tab ${
@@ -164,6 +110,7 @@ export default function Booking() {
             This month's booking
           </button>
         </div>
+        {/* Display content */}
         <div className="w-full p-4 overflow-y-auto bg-white shadow-sm content">
           {displayContent()}
         </div>
