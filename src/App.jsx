@@ -3,7 +3,7 @@ import Pagenotfound from "./pages/Pagenotfound";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
-import Loginpage from "./pages/Loginpage";
+import AdminLogin from "./pages/Loginpage";
 import Signuppage from "./pages/Signuppage";
 import Hostelpage from "./pages/Hostelpage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -12,6 +12,7 @@ import AdminHostelList from "./pages/AdminHostelList";
 import AdminMyProfilePage from "./pages/AdminMyProfilePage";
 import BookingPage from "./pages/BookingPage";
 import HostelDetails from "./pages/HostelDetails";
+import Login from "./components/Login"
 const App = () => {
   return (
     <>
@@ -20,7 +21,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
-          <Route path="login" element={<Loginpage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="adminlogin" element={<AdminLogin />} />
           <Route path="signup" element={<Signuppage />} />
           <Route path="hostel" element={<Hostelpage />} />
           <Route path="admin" element={<AdminPage />} />

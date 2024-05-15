@@ -1,10 +1,12 @@
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
+import { useAuth } from "../providers/authProvider";
 
-function HostelCard({ hostel, session, onUpdate, onDelete }) {
+function HostelCard({ hostel, onUpdate, onDelete }) {
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [updatedHostel, setUpdatedHostel] = useState({ ...hostel });
+  const [logged, session] = useAuth();
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
@@ -21,21 +23,23 @@ function HostelCard({ hostel, session, onUpdate, onDelete }) {
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://hostelstay.onrender.com/admin/hostels/${hostel_id}`, {
+      const response = await fetch(`http://127.0.0.1:8000/admin/hostels/${hostel._id.$oid}`, {
         method: "PUT",
         headers: {
+          "accept": "application/json",
+          "Authorization": `Bearer ${session}`,
           "Content-Type": "application/json",
-          Authorization: `Bearer ${session}`,
         },
-        body: JSON.stringify(hostel), // Assuming hostel contains updated data
+        body: JSON.stringify(updatedHostel),
       });
       if (!response.ok) {
         throw new Error("Failed to update hostel");
       }
-      // If update is successful, you might want to handle success here
+      setLoading(false);
+      setEditMode(false);
+      onUpdate(updatedHostel);
     } catch (error) {
       console.error("Error updating hostel:", error.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -43,8 +47,17 @@ function HostelCard({ hostel, session, onUpdate, onDelete }) {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      // Perform delete operation using the onDelete prop
-      await onDelete(hostel._id.$oid);
+      const response = await fetch(`http://127.0.0.1:8000/admin/hostels/${hostel._id.$oid}`, {
+        method: "DELETE",
+        headers: {
+          "accept": "application/json",
+          "Authorization": `Bearer ${session}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete hostel");
+      }
+      onDelete(hostel._id.$oid);
     } catch (error) {
       console.error("Error deleting hostel:", error.message);
     } finally {

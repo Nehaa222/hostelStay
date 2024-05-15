@@ -3,11 +3,13 @@ import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, 
 import DashboardNav from "./DashboardNav";
 import { MdMapsHomeWork } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import { useAuth } from "../providers/authProvider";
 
 export default function Admin() {
   const [totalHostels, setTotalHostels] = useState(0);
   const [totalBookings, setTotalBookings] = useState(0);
   const [requests, setRequests] = useState([]);
+  const [logged, session] = useAuth();
 
   useEffect(() => {
     fetchTotalHostels();
@@ -17,7 +19,14 @@ export default function Admin() {
 
   const fetchTotalHostels = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/hostels/count");
+      const response = await fetch("http://127.0.0.1:8000/admin/hostels/totalhostels", 
+      {
+        method: "GET",
+        headers: {
+          'accept': 'application/json',
+          "Authorization": `Bearer ${session}`,
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setTotalHostels(data.totalHostels);
@@ -31,7 +40,7 @@ export default function Admin() {
 
   const fetchTotalBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/bookings/count");
+      const response = await fetch("https://hostelstay.onrender.com/admin/bookings");
       if (response.ok) {
         const data = await response.json();
         setTotalBookings(data.totalBookings);
@@ -45,7 +54,7 @@ export default function Admin() {
 
   const fetchAllBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/bookings");
+      const response = await fetch("https://hostelstay.onrender.com/admin/allbookings");
       if (response.ok) {
         const data = await response.json();
         setRequests(data.bookings);
@@ -60,7 +69,7 @@ export default function Admin() {
   const handleAccept = async (id) => {
     try {
       const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/accept`, {
-        method: "PUT",
+        method: "PUT"
       });
       if (response.ok) {
         fetchAllBookings();
@@ -75,7 +84,7 @@ export default function Admin() {
   const handleDecline = async (id) => {
     try {
       const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
-        method: "PUT",
+        method: "PUT"
       });
       if (response.ok) {
         fetchAllBookings();
@@ -146,6 +155,7 @@ export default function Admin() {
               </Table>
             </TableContainer>
           </div>
+
         </div>
       </div>
     </div>

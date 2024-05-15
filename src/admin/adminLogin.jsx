@@ -1,17 +1,19 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const Login = () => {
+const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Check credentials and authenticate admin here
     // For simplicity, let's assume admin credentials are hardcoded
-    if (username === 'admin' && password === 'admin') {
-      // Admin authenticated, perform necessary actions (e.g., redirect to admin dashboard)
-      console.log('Admin authenticated');
+    if (username === 'dineshjr' && password === 'dineshjr11') {
+      // Admin authenticated, navigate to admin dashboard
+      navigate('/admin'); // Navigate to admin dashboard
     } else {
       setError('Invalid username or password');
     }
@@ -70,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
