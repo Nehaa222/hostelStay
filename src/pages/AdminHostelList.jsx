@@ -3,7 +3,7 @@ import HostelCard from "../admin/HostelCard";
 import DashboardNav from "../admin/DashboardNav";
 import { useState, useEffect } from "react";
 import { useAuth, login } from "../providers/authProvider";
-import { authFetch } from "../providers/authProvider";
+
 
 export default function AdminHostelList() {
   const [logged, session] = useAuth();
