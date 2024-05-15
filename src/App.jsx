@@ -11,6 +11,7 @@ import AdminPage from "./pages/AdminPage";
 import AdminHostelList from "./pages/AdminHostelList";
 import AdminMyProfilePage from "./pages/AdminMyProfilePage";
 import BookingPage from "./pages/BookingPage";
+import HostelDetails from "./pages/HostelDetails";
 const App = () => {
   return (
     <>
@@ -26,7 +27,7 @@ const App = () => {
           <Route path="hostel-list" element={<AdminHostelList />} />
           <Route path="my-profile" element={<AdminMyProfilePage />} />
           <Route path="booking" element={<BookingPage />} />
-
+          <Route path="details" element={<HostelDetails />} />
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </BrowserRouter>
