@@ -102,3 +102,41 @@ def get_bookings_for_month(current_user: User = Depends(get_current_admin_user))
         end_of_month = start_of_month.replace(month=start_of_month.month + 1)
     bookings = list(bookings_collection.find({"created_at": {"$gte": start_of_month, "$lt": end_of_month}}))
     return json.loads(json_util.dumps(bookings))
+
+# Get total number of hostels
+@admin_router.get("/admin/hostels/total")
+def get_total_hostels(current_user: User = Depends(get_current_admin_user)):
+    total_hostels = hostel_collection.count_documents({})
+    return {"total_hostels": total_hostels}
+
+# Get total number of bookings
+@admin_router.get("/admin/bookings/total")
+def get_total_bookings(current_user: User = Depends(get_current_admin_user)):
+    total_bookings = bookings_collection.count_documents({})
+    return {"total_bookings": total_bookings}
+
+# Accept booking request
+@admin_router.put("/admin/bookings/accept/{booking_id}")
+def accept_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
+    booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    # Perform necessary actions to accept the booking, e.g., update status in the database
+    # Assuming you have a field named 'status' in your Bookings model, you can update it to 'accepted'
+    updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": {"status": "accepted"}})
+
+    return {"message": "Booking accepted successfully"}
+
+# Decline booking request
+@admin_router.put("/admin/bookings/decline/{booking_id}")
+def decline_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
+    booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    # Perform necessary actions to decline the booking, e.g., update status in the database
+    # Assuming you have a field named 'status' in your Bookings model, you can update it to 'declined'
+    updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": {"status": "declined"}})
+
+    return {"message": "Booking declined successfully"}
