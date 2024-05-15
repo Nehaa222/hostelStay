@@ -21,10 +21,18 @@ function HostelCard({ hostel, session, onUpdate, onDelete }) {
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      // Perform update operation using the onUpdate prop
-      await onUpdate(updatedHostel);
-      // Exit edit mode after successful update
-      setEditMode(false);
+      const response = await fetch(`https://hostelstay.onrender.com/admin/hostels/${hostel_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session}`,
+        },
+        body: JSON.stringify(hostel), // Assuming hostel contains updated data
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update hostel");
+      }
+      // If update is successful, you might want to handle success here
     } catch (error) {
       console.error("Error updating hostel:", error.message);
     } finally {

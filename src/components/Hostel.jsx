@@ -14,7 +14,7 @@ import radiantGirls from "../images/radiantgirls.jpg";
 import sunita from "../images/sunita.jpeg";
 import sapana from "../images/sapana.jpeg";
 import islington from "../images/islington.jpeg";
-
+import { Link } from "react-router-dom";
 const Hostel = () => {
   return (
     <div>
