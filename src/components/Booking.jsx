@@ -83,8 +83,11 @@ export default function Booking() {
           <span>Logout</span>
         </div>
       </div>
-      <div className="container flex flex-col items-center justify-start w-[80%] pt-6">
+      <div className="container flex flex-col items-center justify-start w-[80%] pt-6 relative">
         <p className="font-bold text-3xl mb-6">BOOKING DETAIL</p>
+        <Link to ="/booknow"><button className="absolute top-6 right-6 bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-400">
+          Book Now
+        </button></Link>
         <div className="tabs mb-6">
           <button
             className={`tab ${
