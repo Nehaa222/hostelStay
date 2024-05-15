@@ -30,7 +30,7 @@ function AdminMyProfilePage() {
         </div>
         <form className="flex flex-col gap-10 mt-5">
           <Input
-            type="email"
+            type="text"
             label="Username"
             placeholder="Username"
             labelPlacement="outside"
@@ -58,7 +58,7 @@ function AdminMyProfilePage() {
             value={mailValue}
           />
           <Input
-            type={state ? "email" : "password"}
+            type={state ? "text" : "password"}
             label="Password"
             placeholder="Password"
             labelPlacement="outside"

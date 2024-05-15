@@ -1,28 +1,34 @@
-import { Button } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 import HostelCard from "../admin/HostelCard";
 import DashboardNav from "../admin/DashboardNav";
 import { useState, useEffect } from "react";
 import { useAuth, login } from "../providers/authProvider";
 import { authFetch } from "../providers/authProvider";
 
-
 export default function AdminHostelList() {
   const [logged, session] = useAuth();
-  console.log(session)
+  console.log(session);
   const [hostels, setHostels] = useState([]);
+  const [onAdd, setOnAdd] = useState(false);
+  function handleOnSubmit(e) {
+    e.preventDefault();
+  }
 
   useEffect(() => {
     const fetchHostels = async () => {
       try {
-        const response = await fetch("https://hostelstay.onrender.com/admin/hostels", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // You may need to include authorization headers if required by your API
-            // For example, you can include an authorization token like this:
-            "Authorization": `Bearer ${session}`,
-          },
-        });
+        const response = await fetch(
+          "https://hostelstay.onrender.com/admin/hostels",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // You may need to include authorization headers if required by your API
+              // For example, you can include an authorization token like this:
+              Authorization: `Bearer ${session}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch hostels");
         }
@@ -44,10 +50,55 @@ export default function AdminHostelList() {
           <Button
             radius="full"
             className="text-lg font-semibold text-white shadow-lg bg-gradient-to-tr from-pink-600 to-yellow-600"
+            onClick={() => {
+              setOnAdd(!onAdd);
+            }}
           >
             Add
           </Button>
         </div>
+        {onAdd && (
+          <form
+            className="mt-5 shadow-2xl w-[43%] h-[fit] m-auto rounded-xl flex flex-col items-center gap-[1.5rem]"
+            onSubmit={handleOnSubmit}
+          >
+            <h3 className="text-4xl font-semibold">Add Hostel</h3>
+            <Input
+              type="text"
+              label="Hostel Name"
+              placeholder="Username"
+              labelPlacement="outside"
+              className="w-[50%]"
+            />
+            <Input
+              type="text"
+              label="Hostel Type"
+              placeholder="Add a Hostel type"
+              labelPlacement="outside"
+              className="w-[50%]"
+            />
+            <Input
+              type="text"
+              label="Hostel Location"
+              placeholder="Add location"
+              labelPlacement="outside"
+              className="w-[50%]"
+            />
+            <Input
+              type="number"
+              label="Contact"
+              placeholder="Add Contact Number"
+              labelPlacement="outside"
+              className="w-[50%]"
+            />
+            <Button
+              color="success"
+              className="w-[25%] text-lg rounded-lg text-seto my-2 font-semibold"
+            >
+              Confirm
+            </Button>
+          </form>
+        )}
         <div className="flex flex-col items-center gap-10 mt-4 mb-2 h-fit">
           {hostels.map((hostel) => (
             <div key={hostel.id}>
