@@ -12,7 +12,9 @@ import AdminHostelList from "./pages/AdminHostelList";
 import AdminMyProfilePage from "./pages/AdminMyProfilePage";
 import BookingPage from "./pages/BookingPage";
 import HostelDetails from "./pages/HostelDetails";
-import Login from "./components/Login"
+import Login from "./components/Login";
+import Userbookingpage from "./pages/Userbookingpage";
+import UserProfileCard from "./components/UserProfileCard";
 const App = () => {
   return (
     <>
@@ -30,6 +32,9 @@ const App = () => {
           <Route path="my-profile" element={<AdminMyProfilePage />} />
           <Route path="booking" element={<BookingPage />} />
           <Route path="details" element={<HostelDetails />} />
+          <Route path="user-booking" element={<Userbookingpage />} />
+          <Route path="user-profile" element={<UserProfileCard />} />
+
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </BrowserRouter>

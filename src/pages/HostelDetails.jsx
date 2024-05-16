@@ -20,6 +20,7 @@ import {
   FaWhatsapp,
   FaViber,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 function HostelDetails() {
   return (
     <div>
@@ -139,9 +140,11 @@ function HostelDetails() {
                 </p>
               </div>
               <div className="flex justify-center">
-                <button className="px-3 py-3 mt-5 text-sm font-bold text-white bg-purple-500 rounded-full">
-                  BOOK NOW
-                </button>
+                <Link to="/user-booking">
+                  <button className="px-3 py-3 mt-5 text-sm font-bold text-white bg-purple-500 rounded-full">
+                    BOOK NOW
+                  </button>
+                </Link>
               </div>
             </div>
             <div className="flex items-center justify-center px-10 mt-5 mb-3 space-x-6">
