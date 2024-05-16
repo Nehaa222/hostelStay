@@ -60,31 +60,31 @@ def delete_hostel(hostel_id: str, current_user: User = Depends(get_current_admin
 #admin booking routes
 
 
-# @admin_router.get("/admin/bookings")
-# def get_all_bookings(current_user: User = Depends(get_current_admin_user)):
-#     bookings = list(bookings_collection.find({}))
-#     return json.loads(json_util.dumps(bookings))
+@admin_router.get("/admin/bookings")
+def get_all_bookings(current_user: User = Depends(get_current_admin_user)):
+    bookings = list(bookings_collection.find({}))
+    return json.loads(json_util.dumps(bookings))
 
-# @admin_router.get("/admin/bookings/{booking_id}")
-# def get_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
-#     booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
-#     if not booking:
-#         raise HTTPException(status_code=404, detail="Booking not found")
-#     return json.loads(json_util.dumps(booking))
+@admin_router.get("/admin/bookings/{booking_id}")
+def get_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
+    booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return json.loads(json_util.dumps(booking))
 
-# @admin_router.put("/admin/bookings/{booking_id}")
-# def update_booking(booking_id: str, new_booking_data: Bookings, current_user: User = Depends(get_current_admin_user)):
-#     updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": new_booking_data.dict()})
-#     if updated_booking.modified_count == 0:
-#         raise HTTPException(status_code=404, detail="Booking not found")
-#     return {"message": "Booking updated successfully"}
+@admin_router.put("/admin/bookings/{booking_id}")
+def update_booking(booking_id: str, new_booking_data: Bookings, current_user: User = Depends(get_current_admin_user)):
+    updated_booking = bookings_collection.update_one({"_id": ObjectId(booking_id)}, {"$set": new_booking_data.dict()})
+    if updated_booking.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return {"message": "Booking updated successfully"}
 
-# @admin_router.delete("/admin/bookings/{booking_id}")
-# def delete_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
-#     deleted_booking = bookings_collection.delete_one({"_id": ObjectId(booking_id)})
-#     if deleted_booking.deleted_count == 0:
-#         raise HTTPException(status_code=404, detail="Booking not found")
-#     return {"message": "Booking deleted successfully"}
+@admin_router.delete("/admin/bookings/{booking_id}")
+def delete_booking(booking_id: str, current_user: User = Depends(get_current_admin_user)):
+    deleted_booking = bookings_collection.delete_one({"_id": ObjectId(booking_id)})
+    if deleted_booking.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return {"message": "Booking deleted successfully"}
 
 @admin_router.post("/admin/bookings/add")
 async def add_booking(booking: Bookings, current_user: User = Depends(get_current_admin_user)):
