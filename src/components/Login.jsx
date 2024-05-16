@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,19 +11,21 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useAuth, login } from "../providers/authProvider";
+import { login } from "../providers/authProvider";
 import { Link } from "react-router-dom";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize navigate hook
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      const isAdmin = isAdminEmail(email);
+
       const resp = await fetch("https://hostelstay.onrender.com/token", {
         method: "POST",
         headers: {
@@ -40,15 +42,26 @@ function SignIn() {
       });
 
       if (!resp.ok) {
-        throw new Error("Invalid credentials");
+        throw new Error("Invalid email or password");
       }
 
       const data = await resp.json();
       login(data.access_token);
-      navigate("/hostel-list"); // Navigate to homepage after successful login
+
+      if (isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      setError("Invalid credentials");
+      setError("Invalid email or password");
     }
+  };
+
+  const isAdminEmail = (email) => {
+    console.log("Email:", email);
+    console.log("Is Admin Email:", email.toLowerCase() === "dinesh11");
+    return email.toLowerCase() === "dinesh11";
   };
 
   return (
@@ -79,7 +92,7 @@ function SignIn() {
             required
             fullWidth
             id="email"
-            label="Username"
+            label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
@@ -118,7 +131,7 @@ function SignIn() {
           <Grid container>
             <Grid item xs>
               <Link
-                to="/pagenotfound"
+                to="/forgot-password"
                 variant="body2"
                 className="text-[15px] hover:text-blue-800 hover:underline"
               >
@@ -138,7 +151,6 @@ function SignIn() {
           </Grid>
         </Box>
       </Box>
-      {/* <Copyright sx={{ mt: 4, mb: 2 }} /> */}
     </Container>
   );
 }

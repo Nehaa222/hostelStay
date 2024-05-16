@@ -23,7 +23,7 @@ function HostelCard({ hostel, onUpdate, onDelete }) {
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/admin/hostels/${hostel._id.$oid}`, {
+      const response = await fetch(`https://hostelstay.onrender.com/admin/hostels/${hostel._id.$oid}`, {
         method: "PUT",
         headers: {
           "accept": "application/json",
@@ -47,7 +47,7 @@ function HostelCard({ hostel, onUpdate, onDelete }) {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/admin/hostels/${hostel._id.$oid}`, {
+      const response = await fetch(`https://hostelstay.onrender.com/admin/hostels/${hostel._id.$oid}`, {
         method: "DELETE",
         headers: {
           "accept": "application/json",
@@ -89,30 +89,30 @@ function HostelCard({ hostel, onUpdate, onDelete }) {
             />
             <Input
               type="text"
-              name="address"
-              label="Address"
-              placeholder="Enter hostel address"
+              name="location"
+              label="location"
+              placeholder="Enter hostel location"
               labelPlacement="outside"
               className="text-2xl font-semibold"
-              value={updatedHostel.address}
+              value={updatedHostel.location}
               onChange={handleChange}
             />
             <Input
               type="text"
-              name="phone"
-              label="Phone"
-              placeholder="Enter hostel phone"
+              name="phoneNumber"
+              label="phoneNumber"
+              placeholder="Enter hostel phoneNumber"
               labelPlacement="outside"
               className="text-2xl font-semibold"
-              value={updatedHostel.phone}
+              value={updatedHostel.phoneNumber}
               onChange={handleChange}
             />
           </div>
         ) : (
           <div className="flex flex-col gap-5 ml-5 mt-7">
             <p className="text-2xl font-semibold">{hostel.name}</p>
-            <p className="text-2xl font-semibold">{hostel.address}</p>
-            <p className="text-2xl font-semibold">{hostel.phone}</p>
+            <p className="text-2xl font-semibold">{hostel.location}</p>
+            <p className="text-2xl font-semibold">{hostel.phoneNumber}</p>
           </div>
         )}
         <div className="flex justify-end w-full gap-4 px-3 mb-3">
