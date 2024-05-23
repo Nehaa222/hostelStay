@@ -38,7 +38,7 @@ export default function () {
           <option value="">Girls</option>
         </select>
         <Link to="/">
-          <button className="px-4 py-3 text-lg font-bold bg-[#91B8d9] rounded-lg">
+          <button className="px-4 py-3 text-lg font-bold text-white rounded-lg bg-primary-500 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
             Search
           </button>
         </Link>
