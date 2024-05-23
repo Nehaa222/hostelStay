@@ -7,7 +7,6 @@ const HostelPage = () => {
   return (
     <div>
       <Navbar />
-      <Search />
       <Hostel />
       <Footer />
     </div>

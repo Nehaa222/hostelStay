@@ -80,7 +80,7 @@ export default function Admin() {
 
   const handleAccept = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/admin/bookings/${id}/accept`, {
+      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/accept`, {
         method: "PUT",
         headers: {
           'accept': 'application/json',
@@ -99,7 +99,7 @@ export default function Admin() {
 
   const handleDecline = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/admin/bookings/${id}/decline`, {
+      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
         method: "PUT",
         headers: {
           "Authorization": session ? `Bearer ${session}` : '' // Check if session exists
@@ -114,6 +114,7 @@ export default function Admin() {
       console.error("Error declining booking:", error);
     }
   };
+  
 
   return (
     <div className="Container">
@@ -163,8 +164,8 @@ export default function Admin() {
                       <TableCell style={{ padding: "16px" }}>{booking.hostelName}</TableCell>
                       <TableCell style={{ padding: "16px" }}>{booking.selectedBed}</TableCell>
                       <TableCell align="center" style={{ padding: "16px" }}>
-                        <Button variant="contained" color="success" onClick={() => handleAccept(booking.id)} style={{ marginRight: "8px" }}>Accept</Button>
-                        <Button variant="contained" color="error" onClick={() => handleDecline(booking.id)}>Decline</Button>
+                        <Button variant="contained" color="success" onClick={() => handleAccept(booking._id.$oid)} style={{ marginRight: "8px" }}>Accept</Button>
+                        <Button variant="contained" color="error" onClick={() => handleDecline(booking._id.$oid)}>Decline</Button>
                       </TableCell>
                     </TableRow>
                   ))}

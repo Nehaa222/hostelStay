@@ -87,19 +87,21 @@ function Userbooking() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formErrors = validateForm();
+    const formErrors = [];
+    console.log(formErrors)
     if (Object.keys(formErrors).length === 0) {
       try {
-        const response = await fetch("http://127.0.0.1:8000/bookings", {
+        const response = await fetch("https://hostelstay.onrender.com/bookings", {
           method: "POST",
           headers: {
             accept: "application/json",
             "Content-Type": "application/json",
-            "Authorization": session ? `Bearer ${session}` : '',
+            'Authorization': `Bearer ${session}`,
           },
           body: JSON.stringify({
             booking_id: id,
-            name:formValues.hostelName,
+            name:formValues.fullName,
+            hostelName:hostelDetails.name,
             location: formValues.location,
             selectedBed: formValues.bedSelection,
             status: "pending",
@@ -125,7 +127,7 @@ function Userbooking() {
   useEffect(() => {
     const fetchHostelDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/hostels/${id}`);
+        const response = await fetch(`/hostels/${id}`);
         const data = await response.json(); // Assuming the response data structure matches what you expect
         setHostelDetails(data);
         console.log(hostelDetails)
@@ -136,7 +138,7 @@ function Userbooking() {
 
     fetchHostelDetails();
   }, [id]);
-  console.log(hostelDetails)
+
 
   if (!hostelDetails) {
     return <div>Loading...</div>;
@@ -169,8 +171,9 @@ function Userbooking() {
               <label className="block text-gray-700">Hostel Name</label>
               <input
                 type="text"
+                disabled
                 name="hostelName"
-                value={formValues.hostelName}
+                value={hostelDetails.name}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded"
               />
@@ -237,8 +240,9 @@ function Userbooking() {
               color="success"
               type="submit"
               className="w-full p-2 text-lg font-semibold text-white rounded"
+
             >
-              Login to book
+              Book Now
             </Button>
           </form>
         </div>

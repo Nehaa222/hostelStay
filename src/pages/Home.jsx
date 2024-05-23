@@ -16,7 +16,7 @@ const Home = () => {
     <div>
       <Navbar />
       <Search />
-
+{/* 
       <h1 className="my-3 ml-8 text-2xl font-bold">Trending Boys hostel...</h1>
 
       <div className="flex fle-row justify-evenly">
@@ -42,7 +42,7 @@ const Home = () => {
           image={girls1}
         />
        
-      </div>
+      </div> */}
       <Footer />
     </div>
   );
