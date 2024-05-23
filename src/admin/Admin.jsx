@@ -8,23 +8,23 @@ import { useAuth } from "../providers/authProvider";
 export default function Admin() {
   const [totalHostels, setTotalHostels] = useState(0);
   const [totalBookings, setTotalBookings] = useState(0);
+  const [bookings, setBookings] = useState([]);
   const [requests, setRequests] = useState([]);
   const [logged, session] = useAuth();
 
   useEffect(() => {
     fetchTotalHostels();
     fetchTotalBookings();
-    fetchAllBookings();
-  }, []);
+    fetchBookings();
+  }, [session]); // Trigger fetch calls when session changes
 
   const fetchTotalHostels = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/admin/hostels/totalhostels", 
-      {
+      const response = await fetch("https://hostelstay.onrender.com/admin/totalhostels", {
         method: "GET",
         headers: {
           'accept': 'application/json',
-          "Authorization": `Bearer ${session}`,
+          "Authorization": session ? `Bearer ${session}` : '', // Check if session exists
         }
       });
       if (response.ok) {
@@ -40,7 +40,13 @@ export default function Admin() {
 
   const fetchTotalBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/bookings");
+      const response = await fetch("https://hostelstay.onrender.com/admin/totalbookings", {
+        method: "GET",
+        headers: {
+          'accept': 'application/json',
+          "Authorization": session ? `Bearer ${session}` : '', // Check if session exists
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setTotalBookings(data.totalBookings);
@@ -52,24 +58,31 @@ export default function Admin() {
     }
   };
 
-  const fetchAllBookings = async () => {
+  const fetchBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/allbookings");
-      if (response.ok) {
-        const data = await response.json();
-        setRequests(data.bookings);
-      } else {
-        console.error("Failed to fetch all bookings");
+      const response = await fetch('https://hostelstay.onrender.com/admin/bookings', {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': session ? `Bearer ${session}` : '', // Check if session exists
+        }
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch bookings");
       }
+      const data = await response.json();
+      setBookings(data);
     } catch (error) {
-      console.error("Error fetching all bookings:", error);
+      console.error("Error fetching bookings:", error);
     }
   };
 
   const handleAccept = async (id) => {
     try {
       const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/accept`, {
-        method: "PUT"
+        method: "PUT",
+        headers: {
+          "Authorization": session ? `Bearer ${session}` : '' // Check if session exists
+        }
       });
       if (response.ok) {
         fetchAllBookings();
@@ -84,7 +97,10 @@ export default function Admin() {
   const handleDecline = async (id) => {
     try {
       const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
-        method: "PUT"
+        method: "PUT",
+        headers: {
+          "Authorization": session ? `Bearer ${session}` : '' // Check if session exists
+        }
       });
       if (response.ok) {
         fetchAllBookings();
@@ -131,7 +147,6 @@ export default function Admin() {
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ padding: "16px" }}>Id</TableCell>
                     <TableCell style={{ padding: "16px" }}>Requested by</TableCell>
                     <TableCell style={{ padding: "16px" }}>Hostel Name</TableCell>
                     <TableCell style={{ padding: "16px" }}>Selected Bed</TableCell>
@@ -139,15 +154,14 @@ export default function Admin() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {requests.map((request) => (
-                    <TableRow key={request.id}>
-                      <TableCell style={{ padding: "16px" }}>{request.id}</TableCell>
-                      <TableCell style={{ padding: "16px" }}>{request.requestedBy}</TableCell>
-                      <TableCell style={{ padding: "16px" }}>{request.hostelName}</TableCell>
-                      <TableCell style={{ padding: "16px" }}>{request.selectedBed}</TableCell>
+                  {bookings.map((booking) => ( // Changed 'requests' to 'bookings' in map function
+                    <TableRow key={booking.id}>
+                      <TableCell style={{ padding: "16px" }}>{booking.name}</TableCell>
+                      <TableCell style={{ padding: "16px" }}>{booking.hostelName}</TableCell>
+                      <TableCell style={{ padding: "16px" }}>{booking.selectedBed}</TableCell>
                       <TableCell align="center" style={{ padding: "16px" }}>
-                        <Button variant="contained" color="success" onClick={() => handleAccept(request.id)} style={{ marginRight: "8px" }}>Accept</Button>
-                        <Button variant="contained" color="error" onClick={() => handleDecline(request.id)}>Decline</Button>
+                        <Button variant="contained" color="success" onClick={() => handleAccept(booking.id)} style={{ marginRight: "8px" }}>Accept</Button>
+                        <Button variant="contained" color="error" onClick={() => handleDecline(booking.id)}>Decline</Button>
                       </TableCell>
                     </TableRow>
                   ))}

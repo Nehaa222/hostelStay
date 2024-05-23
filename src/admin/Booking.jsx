@@ -3,18 +3,25 @@ import { FaHome, FaRegUserCircle } from "react-icons/fa";
 import { MdMapsHomeWork } from "react-icons/md";
 import { Link } from "react-router-dom";
 import DashboardNav from "./DashboardNav";
+import { useAuth } from "../providers/authProvider";
 
 export default function Booking() {
   const [bookings, setBookings] = useState([]);
   const [activeTab, setActiveTab] = useState("today");
+  const [logged, session] = useAuth();
 
   useEffect(() => {
-    fetchBookings(activeTab);
+    fetchBookings();
   }, [activeTab]);
 
-  const fetchBookings = async (tab) => {
+  const fetchBookings = async () => {
     try {
-      const response = await fetch(`https://hostelstay.onrender.com/bookings/${tab}`);
+      const response = await fetch('https://hostelstay.onrender.com/admin/bookings', {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': `Bearer ${session}`,
+        }
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch bookings");
       }

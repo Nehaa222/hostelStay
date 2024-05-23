@@ -15,6 +15,7 @@ import HostelDetails from "./pages/HostelDetails";
 import Login from "./components/Login";
 import Userbookingpage from "./pages/Userbookingpage";
 import UserProfileCard from "./components/UserProfileCard";
+
 const App = () => {
   return (
     <>
@@ -31,9 +32,11 @@ const App = () => {
           <Route path="hostel-list" element={<AdminHostelList />} />
           <Route path="my-profile" element={<AdminMyProfilePage />} />
           <Route path="booking" element={<BookingPage />} />
-          <Route path="details" element={<HostelDetails />} />
-          <Route path="user-booking" element={<Userbookingpage />} />
           <Route path="user-profile" element={<UserProfileCard />} />
+
+          {/* Dynamic route for booking hostels */}
+          <Route path="hostel/:id" element={<HostelDetails />} />
+          <Route path="booking/hostel/:id" element={<Userbookingpage />} />
 
           <Route path="*" element={<Pagenotfound />} />
         </Routes>

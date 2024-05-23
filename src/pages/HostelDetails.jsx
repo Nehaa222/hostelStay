@@ -1,3 +1,6 @@
+
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
@@ -24,6 +27,30 @@ import { Link } from "react-router-dom";
 import { Zap, Cog, CircleCheckBig } from "lucide-react";
 
 function HostelDetails() {
+  // Retrieve the id parameter from the URL
+  const { id } = useParams();
+  console.log(id)
+  const [hostelDetails, setHostelDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchHostelDetails = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/hostels/${id}`);
+        const data = await response.json(); // Assuming the response data structure matches what you expect
+        setHostelDetails(data);
+        console.log(hostelDetails)
+      } catch (error) {
+        console.error("Error fetching hostel details:", error);
+      }
+    };
+
+    fetchHostelDetails();
+  }, [id]);
+  console.log(hostelDetails)
+
+  if (!hostelDetails) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <Navbar />
@@ -178,48 +205,7 @@ function HostelDetails() {
                 <TableCell>Roti/ Tarkari</TableCell>
                 <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
               </TableRow>
-              <TableRow key="2">
-                <TableCell>Monday</TableCell>
-                <TableCell>Tea Biscuit</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-                <TableCell>Roti/ Tarkari</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-              </TableRow>
-              <TableRow key="3">
-                <TableCell>Tuesday</TableCell>
-                <TableCell>Tea Biscuit</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-                <TableCell>Roti/ Tarkari</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-              </TableRow>
-              <TableRow key="4">
-                <TableCell>Wednesday</TableCell>
-                <TableCell>Tea Biscuit</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-                <TableCell>Roti/ Tarkari</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-              </TableRow>
-              <TableRow key="5">
-                <TableCell>Thursday</TableCell>
-                <TableCell>Tea Biscuit</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-                <TableCell>Roti/ Tarkari</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-              </TableRow>
-              <TableRow key="6">
-                <TableCell>Friday</TableCell>
-                <TableCell>Tea Biscuit</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-                <TableCell>Roti/ Tarkari</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-              </TableRow>
-              <TableRow key="7">
-                <TableCell>Saturday</TableCell>
-                <TableCell>Tea Biscuit</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-                <TableCell>Roti/ Tarkari</TableCell>
-                <TableCell>Dal/ Rice/ Vegetables/Achar</TableCell>
-              </TableRow>
+              {/* More rows for meal schedule */}
             </TableBody>
           </Table>
         </div>
@@ -240,21 +226,18 @@ function HostelDetails() {
                 <TableCell>{"npr 11000".toUpperCase()}</TableCell>
                 <TableCell>3</TableCell>
               </TableRow>
+              {/* More rows for bed availability */}
             </TableBody>
           </Table>
         </div>
         <div className="absolute right-0 top-[20%] w-fit">
           <div className=" bg-white shadow-lg rounded-2xl overflow-hidden min-h-[fit]">
             <div className="px-10 text-xl">
-              <h2 className="mb-4 font-bold text-center">Dinesh Hostel</h2>
+              <h2 className="mb-4 font-bold text-center">{hostelDetails.name}</h2>
               <div className="flex flex-col gap-5 mb-1">
                 <p className="flex items-center">
-                  <FaBed className="mr-2 text-xl" />
-                  <span className="text-lg">Girls Hostel</span>
-                </p>
-                <p className="flex items-center">
                   <FaPhoneAlt className="mr-2 text-xl" />
-                  <span className="text-lg">9767300355, 9803800847</span>
+                  <span className="text-lg">{hostelDetails.phoneNumber}</span>
                 </p>
                 <p className="flex items-center">
                   <FaEnvelope className="mr-2 text-xl" />
@@ -263,7 +246,7 @@ function HostelDetails() {
 
                 <p className="flex items-center">
                   <FaBed className="mr-2 text-xl" />
-                  <span className="text-lg">75 (Total Beds)</span>
+                  <span className="text-lg">75 {hostelDetails.location}</span>
                 </p>
                 <p className="flex items-center ">
                   <FaBed className="mr-2 text-xl" />
@@ -271,7 +254,7 @@ function HostelDetails() {
                 </p>
               </div>
               <div className="flex justify-center">
-                <Link to="/user-booking">
+                <Link to={`/booking/hostel/${id}`}>
                   <button className="px-3 py-3 mt-5 text-sm font-bold text-white bg-purple-500 rounded-full">
                     BOOK NOW
                   </button>

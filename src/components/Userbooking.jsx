@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import image1 from "../images/girls4.jpeg";
 import { FaPhone } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
 import { IoBed } from "react-icons/io5";
 import { Button } from "@nextui-org/react";
+import { useAuth } from "../providers/authProvider";
+import { useParams } from "react-router-dom";
 
 const BookingConfirmation = ({ onClose }) => {
   return (
@@ -47,7 +49,10 @@ const BookingConfirmation = ({ onClose }) => {
 };
 
 function Userbooking() {
+  const { id } = useParams();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [logged, session] = useAuth();
+  const [hostelDetails, setHostelDetails] = useState(null);
   const [formValues, setFormValues] = useState({
     bedSelection: "",
     lengthOfStay: "",
@@ -80,11 +85,34 @@ function Userbooking() {
     return formErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
-      setShowConfirmation(true);
+      try {
+        const response = await fetch("http://127.0.0.1:8000/bookings", {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            "Authorization": session ? `Bearer ${session}` : '',
+          },
+          body: JSON.stringify({
+            booking_id: id,
+            name:formValues.hostelName,
+            location: formValues.location,
+            selectedBed: formValues.bedSelection,
+            status: "pending",
+          }),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to create booking");
+        }
+        setShowConfirmation(true);
+      } catch (error) {
+        console.error("Error creating booking:", error);
+        setErrors({ booking: "Failed to create booking" });
+      }
     } else {
       setErrors(formErrors);
     }
@@ -93,6 +121,26 @@ function Userbooking() {
   const handleCloseConfirmation = () => {
     setShowConfirmation(false);
   };
+
+  useEffect(() => {
+    const fetchHostelDetails = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/hostels/${id}`);
+        const data = await response.json(); // Assuming the response data structure matches what you expect
+        setHostelDetails(data);
+        console.log(hostelDetails)
+      } catch (error) {
+        console.error("Error fetching hostel details:", error);
+      }
+    };
+
+    fetchHostelDetails();
+  }, [id]);
+  console.log(hostelDetails)
+
+  if (!hostelDetails) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -117,18 +165,19 @@ function Userbooking() {
                   <p className="text-sm text-red-500">{errors.bedSelection}</p>
                 )}
               </div>
-              <div className="flex-1">
-                <label className="block text-gray-700">
-                  Length of Stay (in Month)
-                </label>
-                <input
-                  type="number"
-                  name="lengthOfStay"
-                  value={formValues.lengthOfStay}
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
+              <div>
+              <label className="block text-gray-700">Hostel Name</label>
+              <input
+                type="text"
+                name="hostelName"
+                value={formValues.hostelName}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              {errors.fullName && (
+                <p className="text-sm text-red-500">{errors.hostelName}</p>
+              )}
+            </div>
             </div>
             <div>
               <label className="block text-gray-700">Full Name</label>
@@ -160,7 +209,7 @@ function Userbooking() {
               <div className="flex-1">
                 <label className="block text-gray-700">Mobile Number</label>
                 <input
-                  type="Number"
+                  type="number"
                   name="mobileNumber"
                   value={formValues.mobileNumber}
                   onChange={handleChange}
@@ -189,12 +238,12 @@ function Userbooking() {
               type="submit"
               className="w-full p-2 text-lg font-semibold text-white rounded"
             >
-              Book Now
+              Login to book
             </Button>
           </form>
         </div>
         <div className="flex flex-col items-center w-1/3 p-4 ml-4 font-thin text-black rounded-lg bg-slate-200">
-          <h2 className="mb-2 text-xl font-semibold">Your Selection</h2>
+          <h2 className="mb-2 text-xl font-semibold">{hostelDetails.name}</h2>
           <img
             src={image1}
             alt="Selected Hostel"
@@ -202,19 +251,10 @@ function Userbooking() {
           />
           <div className="text-center">
             <p className="flex items-center font-semibold">
-              <FaPhone className="mr-2" /> 9823094567
+              <FaPhone className="mr-2" /> {hostelDetails.phoneNumber}
             </p>
             <p className="flex items-center font-semibold">
-              <FaPhone className="mr-2" /> 9820094467
-            </p>
-            <p className="flex items-center font-semibold">
-              <MdOutlineEmail className="mr-2" /> Send Email
-            </p>
-            <p className="flex items-center font-semibold">
-              <MdLocationOn className="mr-2" /> Putalisadak, Kathmandu
-            </p>
-            <p className="flex items-center font-semibold">
-              <IoBed className="mr-2" /> Boys Hostel
+              <MdLocationOn className="mr-2" /> {hostelDetails.location}
             </p>
           </div>
         </div>

@@ -28,30 +28,7 @@ const Home = () => {
           availability="Yes!"
           image={prarambha}
         />
-        <Cards
-          name="Bageshwori"
-          location="Sankhamul"
-          rating="2.0"
-          price="Rs. 10K"
-          availability="No!"
-          image={buddha}
-        />
-        <Cards
-          name="Chinari"
-          location="Buddhanagar"
-          rating="0.1"
-          price="Rs. 11K"
-          availability="Yes!"
-          image={newImage}
-        />
-        <Cards
-          name="Supriya"
-          location="Kalopul"
-          rating="3.0"
-          price="Rs. 15K"
-          availability="No!"
-          image={image}
-        />
+       
       </div>
 
       <h1 className="my-3 ml-8 text-2xl font-bold">Trending Girls hostel...</h1>
@@ -64,30 +41,7 @@ const Home = () => {
           availability="No!"
           image={girls1}
         />
-        <Cards
-          name="Simran"
-          location="Naxal"
-          rating="9.0"
-          price="Rs. 19K"
-          availability="No!"
-          image={girls2}
-        />
-        <Cards
-          name="Aayusha"
-          location="Patan"
-          rating="7.0"
-          price="Rs. 17K"
-          availability="Yes!"
-          image={girls3}
-        />
-        <Cards
-          name="Herald Girls"
-          location="Gwarko"
-          rating="5.0"
-          price="Rs. 15K"
-          availability="Yes!"
-          image={girls4}
-        />
+       
       </div>
       <Footer />
     </div>
