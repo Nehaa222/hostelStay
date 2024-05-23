@@ -15,6 +15,7 @@ import HostelDetails from "./pages/HostelDetails";
 import Login from "./components/Login";
 import Userbookingpage from "./pages/Userbookingpage";
 import UserProfileCard from "./components/UserProfileCard";
+import Messagetable from "./pages/Messagetable";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="my-profile" element={<AdminMyProfilePage />} />
           <Route path="booking" element={<BookingPage />} />
           <Route path="user-profile" element={<UserProfileCard />} />
+          <Route path="message" element={<Messagetable />} />
 
           {/* Dynamic route for booking hostels */}
           <Route path="hostel/:id" element={<HostelDetails />} />

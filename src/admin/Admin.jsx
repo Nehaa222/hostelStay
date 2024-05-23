@@ -40,7 +40,9 @@ export default function Admin() {
 
   const fetchTotalBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/totalbookings", {
+      const response = await fetch(
+        "https://hostelstay.onrender.com/admin/totalbookings"
+      , {
         method: "GET",
         headers: {
           'accept': 'application/json',
@@ -78,9 +80,10 @@ export default function Admin() {
 
   const handleAccept = async (id) => {
     try {
-      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/accept`, {
+      const response = await fetch(`http://127.0.0.1:8000/admin/bookings/${id}/accept`, {
         method: "PUT",
         headers: {
+          'accept': 'application/json',
           "Authorization": session ? `Bearer ${session}` : '' // Check if session exists
         }
       });
@@ -96,7 +99,7 @@ export default function Admin() {
 
   const handleDecline = async (id) => {
     try {
-      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
+      const response = await fetch(`http://127.0.0.1:8000/admin/bookings/${id}/decline`, {
         method: "PUT",
         headers: {
           "Authorization": session ? `Bearer ${session}` : '' // Check if session exists
