@@ -35,4 +35,9 @@ def delete_hostel(hostel_id:str):
     return {
         "message":"Successfully deleted"
     }
+
+@hostel_router.get("/hostels/{hostel_id}")
+def get_hostel(hostel_id: str):
+    hostel = hostel_collection.find_one({"_id": ObjectId(hostel_id)})
+    return json.loads(json_util.dumps(hostel))
     
