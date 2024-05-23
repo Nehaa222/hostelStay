@@ -15,6 +15,7 @@ import HostelDetails from "./pages/HostelDetails";
 import Login from "./components/Login";
 import Userbookingpage from "./pages/Userbookingpage";
 import UserProfileCard from "./components/UserProfileCard";
+import Messagetable from "./pages/Messagetable";
 const App = () => {
   return (
     <>
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="details" element={<HostelDetails />} />
           <Route path="user-booking" element={<Userbookingpage />} />
           <Route path="user-profile" element={<UserProfileCard />} />
+          <Route path="message" element={<Messagetable />} />
 
           <Route path="*" element={<Pagenotfound />} />
         </Routes>

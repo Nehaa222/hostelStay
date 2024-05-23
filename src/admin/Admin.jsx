@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import DashboardNav from "./DashboardNav";
 import { MdMapsHomeWork } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useAuth } from "../providers/authProvider";
 
 export default function Admin() {
@@ -19,14 +29,16 @@ export default function Admin() {
 
   const fetchTotalHostels = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/admin/hostels/totalhostels", 
-      {
-        method: "GET",
-        headers: {
-          'accept': 'application/json',
-          "Authorization": `Bearer ${session}`,
+      const response = await fetch(
+        "http://127.0.0.1:8000/admin/hostels/totalhostels",
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${session}`,
+          },
         }
-      });
+      );
       if (response.ok) {
         const data = await response.json();
         setTotalHostels(data.totalHostels);
@@ -40,7 +52,9 @@ export default function Admin() {
 
   const fetchTotalBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/bookings");
+      const response = await fetch(
+        "https://hostelstay.onrender.com/admin/bookings"
+      );
       if (response.ok) {
         const data = await response.json();
         setTotalBookings(data.totalBookings);
@@ -54,7 +68,9 @@ export default function Admin() {
 
   const fetchAllBookings = async () => {
     try {
-      const response = await fetch("https://hostelstay.onrender.com/admin/allbookings");
+      const response = await fetch(
+        "https://hostelstay.onrender.com/admin/allbookings"
+      );
       if (response.ok) {
         const data = await response.json();
         setRequests(data.bookings);
@@ -68,9 +84,12 @@ export default function Admin() {
 
   const handleAccept = async (id) => {
     try {
-      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/accept`, {
-        method: "PUT"
-      });
+      const response = await fetch(
+        `https://hostelstay.onrender.com/admin/bookings/${id}/accept`,
+        {
+          method: "PUT",
+        }
+      );
       if (response.ok) {
         fetchAllBookings();
       } else {
@@ -83,9 +102,12 @@ export default function Admin() {
 
   const handleDecline = async (id) => {
     try {
-      const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
-        method: "PUT"
-      });
+      const response = await fetch(
+        `https://hostelstay.onrender.com/admin/bookings/${id}/decline`,
+        {
+          method: "PUT",
+        }
+      );
       if (response.ok) {
         fetchAllBookings();
       } else {
@@ -101,8 +123,13 @@ export default function Admin() {
       <div className="flex w-full h-full cursor-pointer">
         <DashboardNav />
         <div className="w-full p-5 main-dashboard">
-          <div className="mb-10">
+          <div className="flex justify-between w-full mb-10">
             <p className="text-4xl font-semibold">Hello, Admin</p>
+            <Link to="/message">
+              <Button variant="contained" color="primary">
+                View Message
+              </Button>
+            </Link>
           </div>
 
           <div className="flex gap-8 mb-5 space-x-4 info-cards">
@@ -112,7 +139,9 @@ export default function Admin() {
                   <MdMapsHomeWork className="w-6 h-6" />
                   <span className="text-2xl font-bold">Total Hostel</span>
                 </div>
-                <p className="mt-4 text-6xl font-bold text-center">{totalHostels}</p>
+                <p className="mt-4 text-6xl font-bold text-center">
+                  {totalHostels}
+                </p>
               </div>
             </div>
             <div className="card bg-purple-600 text-white p-3 w-1/4 flex flex-col justify-between rounded-lg shadow-md h-[170px]">
@@ -121,7 +150,9 @@ export default function Admin() {
                   <FaHome className="w-6 h-6" />
                   <span className="text-2xl font-bold">Total Booking</span>
                 </div>
-                <p className="mt-4 text-6xl font-bold text-center">{totalBookings}</p>
+                <p className="mt-4 text-6xl font-bold text-center">
+                  {totalBookings}
+                </p>
               </div>
             </div>
           </div>
@@ -132,22 +163,51 @@ export default function Admin() {
                 <TableHead>
                   <TableRow>
                     <TableCell style={{ padding: "16px" }}>Id</TableCell>
-                    <TableCell style={{ padding: "16px" }}>Requested by</TableCell>
-                    <TableCell style={{ padding: "16px" }}>Hostel Name</TableCell>
-                    <TableCell style={{ padding: "16px" }}>Selected Bed</TableCell>
-                    <TableCell align="center" style={{ padding: "16px" }}>Actions</TableCell>
+                    <TableCell style={{ padding: "16px" }}>
+                      Requested by
+                    </TableCell>
+                    <TableCell style={{ padding: "16px" }}>
+                      Hostel Name
+                    </TableCell>
+                    <TableCell style={{ padding: "16px" }}>
+                      Selected Bed
+                    </TableCell>
+                    <TableCell align="center" style={{ padding: "16px" }}>
+                      Actions
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {requests.map((request) => (
                     <TableRow key={request.id}>
-                      <TableCell style={{ padding: "16px" }}>{request.id}</TableCell>
-                      <TableCell style={{ padding: "16px" }}>{request.requestedBy}</TableCell>
-                      <TableCell style={{ padding: "16px" }}>{request.hostelName}</TableCell>
-                      <TableCell style={{ padding: "16px" }}>{request.selectedBed}</TableCell>
+                      <TableCell style={{ padding: "16px" }}>
+                        {request.id}
+                      </TableCell>
+                      <TableCell style={{ padding: "16px" }}>
+                        {request.requestedBy}
+                      </TableCell>
+                      <TableCell style={{ padding: "16px" }}>
+                        {request.hostelName}
+                      </TableCell>
+                      <TableCell style={{ padding: "16px" }}>
+                        {request.selectedBed}
+                      </TableCell>
                       <TableCell align="center" style={{ padding: "16px" }}>
-                        <Button variant="contained" color="success" onClick={() => handleAccept(request.id)} style={{ marginRight: "8px" }}>Accept</Button>
-                        <Button variant="contained" color="error" onClick={() => handleDecline(request.id)}>Decline</Button>
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={() => handleAccept(request.id)}
+                          style={{ marginRight: "8px" }}
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => handleDecline(request.id)}
+                        >
+                          Decline
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -155,7 +215,6 @@ export default function Admin() {
               </Table>
             </TableContainer>
           </div>
-
         </div>
       </div>
     </div>
