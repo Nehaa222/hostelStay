@@ -7,11 +7,11 @@
 // import Signuppage from "./pages/Signuppage";
 // import Hostelpage from "./pages/Hostelpage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminDashboard from "./components/AdminDashboard";
+// import AdminDashboard from "./components/AdminDashboard";
 // import Booking from "./components/Booking";
 // import Booknow from "./components/Booknow";
-// import Profile from "./components/Profile";
-import Messagetable from "./components/Messagetable";
+import Profile from "./components/Profile";
+// import Messagetable from "./components/Messagetable";
 // import Changepassword from "./components/Changepassword";
 // import Bnotify from "./components/Bnotify";
 const App = () => {
@@ -25,11 +25,11 @@ const App = () => {
         <Route path="signup" element={<Signuppage />} />
         <Route path="hostel" element={<Hostelpage />} />
         <Route path="*" element={<Pagenotfound />} /> */ }
-         <Route path="/" element={<AdminDashboard />} />
+         {/* <Route path="/" element={<AdminDashboard />} /> */}
          {/* <Route path="/booking" element={<Booking />} /> */}
         {/* <Route path="/" element={<Booknow />} /> */}
-        {/* <Route path="/" element={<Profile />} /> */}
-        <Route path="/Messagetable" element={<Messagetable/>} />
+        <Route path="/" element={<Profile />} />
+        {/* <Route path="/Messagetable" element={<Messagetable/>} /> */}
         {/* //  <Route path="/" element={<Changepassword />} />  */}
          {/* <Route path="/" element={< Bnotify/>} /> */}
          

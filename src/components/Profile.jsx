@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
-import { FiLock, FiBookOpen } from 'react-icons/fi';
+import { FiLock } from 'react-icons/fi';
 
 const UserProfileCard = () => {
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -25,10 +25,6 @@ const UserProfileCard = () => {
           <h2 className="text-2xl font-semibold mb-3">Harsh</h2>
           <p className="text-gray-700 mb-6">kricrit52@gmail.com</p>
           <div className="space-y-4">
-            <button className="flex items-center justify-start w-full py-3 bg-white text-gray-700 rounded shadow hover:bg-gray-200">
-              <FiBookOpen className="mr-2 text-3xl" />
-              <span>My Bookings</span>
-            </button>
             <button onClick={handleShowChangePassword} className="flex items-center justify-start w-full py-3 bg-white text-gray-700 rounded shadow hover:bg-gray-200">
               <FiLock className="mr-2 text-3xl" />
               <span>Change Password</span>
