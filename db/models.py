@@ -60,4 +60,4 @@ class Bookings(BaseModel):
     name:str
     hostelName:str
     selectedBed:str
-    
+    status: Optional[str] = "pending"   

@@ -6,7 +6,7 @@ from auth.auth import get_current_active_user
 from typing import Annotated
 from bson import ObjectId
 import json
-from fastapi.encoders import jsonable_encoder
+from bson import json_util
 
 booking_router = APIRouter(tags=["bookings"])
 
@@ -17,6 +17,7 @@ def create_booking(booking: Bookings, current_user: Annotated[User, Depends(get_
         "name": booking.name,
         "hostelName": booking.hostelName,
         "selectedBed": booking.selectedBed,
+        "status": booking.status
         
     })
     return {"message": "Booking created successfully"}
@@ -24,7 +25,7 @@ def create_booking(booking: Bookings, current_user: Annotated[User, Depends(get_
 @booking_router.get("/bookings")
 def get_bookings():
     bookings = list(bookings_collection.find({}))
-    return jsonable_encoder(bookings)
+    return  json.loads(json_util.dumps(bookings))
 
 @booking_router.delete("/bookings/{booking_id}")
 def delete_booking(booking_id: str):
