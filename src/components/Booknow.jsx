@@ -31,7 +31,7 @@ const BookingConfirmation = ({ onClose }) => {
         <p className="text-gray-600 mb-4">
           We will be informing you further about the booking via mail or contact number
         </p>
-        <button onClick={onClose} className="bg-purple-500 text-white py-2 px-4 rounded">Ok</button>
+        <button onClick={onClose} className="bg-purple-500 text-white py-2 px-8 rounded">Ok</button>
       </div>
     </div>
   );
@@ -63,7 +63,11 @@ function Booknow() {
     if (!formValues.lengthOfStay) formErrors.lengthOfStay = 'Length of Stay is required';
     if (!formValues.fullName) formErrors.fullName = 'Full Name is required';
     if (!formValues.address) formErrors.address = 'Address is required';
-    if (!formValues.mobileNumber) formErrors.mobileNumber = 'Mobile Number is required';
+    if (!formValues.mobileNumber) {
+      formErrors.mobileNumber = 'Mobile Number is required';
+    } else if (!/^\d{10}$/.test(formValues.mobileNumber)) {
+      formErrors.mobileNumber = 'Mobile Number must contain exactly 10 digits';
+    }
     if (!formValues.email) formErrors.email = 'Email Address is required';
     return formErrors;
   };
@@ -87,7 +91,7 @@ function Booknow() {
       {showConfirmation && <BookingConfirmation onClose={handleCloseConfirmation} />}
       <div className="bg-white shadow-md rounded-lg p-6 max-w-4xl w-full flex">
         <div className="flex-1">
-          <h2 className="text-lg font-semibold mb-4">Guess Information</h2>
+          <h2 className="text-lg font-semibold mb-4">Guest Information</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="flex space-x-4">
               <div className="flex-1">
@@ -178,4 +182,4 @@ function Booknow() {
   );
 }
 
-export default Booknow;
+export default Booknow; 

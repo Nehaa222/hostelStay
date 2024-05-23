@@ -34,15 +34,12 @@ export default function AdminDashboard() {
     createRequest(10, "Jasmin Lama", "Laxmi Hostel", "Single"),
   ]);
 
-
   const handleAccept = (id) => {
     console.log("Accepted request with ID:", id);
-    
   };
 
   const handleDecline = (id) => {
     console.log("Declined request with ID:", id);
-    
   };
 
   return (
@@ -76,8 +73,13 @@ export default function AdminDashboard() {
         </div>
 
         <div className="main-dashboard p-5 w-full ml-[20%]">
-          <div className="mb-10">
+          <div className="flex justify-between items-center mb-10">
             <p className="text-4xl font-semibold">Hello, Admin</p>
+            <Link to="/Messagetable">
+              <Button variant="contained" color="primary">
+                View Message
+              </Button>
+            </Link>
           </div>
 
           <div className="info-cards flex gap-8 mb-5 space-x-4">
