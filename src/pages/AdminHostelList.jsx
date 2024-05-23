@@ -26,7 +26,7 @@ export default function AdminHostelList() {
   const handleConfirm = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     try {
-      const response = await fetch('http://127.0.0.1:8000/admin/hostels', {
+      const response = await fetch('https://hostelstay.onrender.com/admin/hostels', {
         method: 'POST',
         headers: {
           'accept': 'application/json',
@@ -147,8 +147,8 @@ export default function AdminHostelList() {
             <div key={index}>
               <HostelCard
                 hostel={hostel}
-                // onUpdate={handleUpdate}
-                // onDelete={handleDelete}
+                //onUpdate={handleUpdate}
+                //nDelete={handleDelete}
               />
             </div>
           ))}
