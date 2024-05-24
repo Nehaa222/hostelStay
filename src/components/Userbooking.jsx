@@ -127,7 +127,7 @@ function Userbooking() {
   useEffect(() => {
     const fetchHostelDetails = async () => {
       try {
-        const response = await fetch(`/hostels/${id}`);
+        const response = await fetch(`https://hostelstay.onrender.com/hostels/${id}`);
         const data = await response.json(); // Assuming the response data structure matches what you expect
         setHostelDetails(data);
         console.log(hostelDetails)
@@ -236,14 +236,22 @@ function Userbooking() {
                 )}
               </div>
             </div>
-            <Button
+            {!logged ?  <Button
+              color="danger"
+              type="submit"
+              className="w-full p-2 text-lg font-semibold text-white rounded"
+
+            >
+             You must login to book
+            </Button>  : <Button
               color="success"
               type="submit"
               className="w-full p-2 text-lg font-semibold text-white rounded"
 
             >
               Book Now
-            </Button>
+            </Button>}
+            
           </form>
         </div>
         <div className="flex flex-col items-center w-1/3 p-4 ml-4 font-thin text-black rounded-lg bg-slate-200">

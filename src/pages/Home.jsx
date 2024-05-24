@@ -15,7 +15,8 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <Search />
+     <Search />
+    
 {/* 
       <h1 className="my-3 ml-8 text-2xl font-bold">Trending Boys hostel...</h1>
 

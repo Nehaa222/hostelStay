@@ -114,15 +114,15 @@ export default function SearchPage() {
             </p>
             <p className="flex items-center gap-2">
               <StarRateIcon />
-              Rating: {hostel.rating}
+              Rating: 5
             </p>
             <p className="flex items-center gap-2">
               <AttachMoneyIcon />
-              Price: {hostel.price}
+              Price: 12000
             </p>
             <p className="flex items-center gap-2">
               <EventAvailableIcon />
-              Availability: {hostel.availability}
+              Availability: Yes
             </p>
           </div>
         </div>

@@ -13,10 +13,13 @@ const randomImages = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe3fZO7V0tgfQrYjtDruSYLjSgAGiBnfYP-B8DxdUfXw&s",
   "https://i.guim.co.uk/img/media/a6f9c242b7ba8c41c3a5940ae552c2d0e4318393/29_246_2626_1575/master/2626.jpg?width=300&quality=45&auto=format&fit=max&dpr=2&s=f37da454634e9d84412c1ab2ac799d48",
   "https://static01.nyt.com/images/2012/07/06/business/Hostel1/Hostel1-superJumbo.jpg", 
+  "https://www.shutterstock.com/image-photo/young-cheerful-smiling-men-women-260nw-1090140167.jpg",
+  "https://media.istockphoto.com/id/1292522563/photo/modern-college-dorm-room-with-messy-bunk-beds-and-parquet-floor.jpg?s=612x612&w=0&k=20&c=Kq36voIf8cmnQaGv0Q1UdPf3Ty5mOpHdjoFj8Ly4Phw=",
+
   // Add more URLs as needed
 ];
 
-export default function Cards() {
+export default function Cards({rating, price, availability}) {
   const [hostelData, setHostelData] = useState([]);
 
   useEffect(() => {
@@ -67,15 +70,15 @@ export default function Cards() {
                 </p>
                 <p className="flex items-center gap-2">
                   <StarRateIcon />
-                  Rating: {hostel.rating}
+                  Rating: {rating}
                 </p>
                 <p className="flex items-center gap-2">
                   <AttachMoneyIcon />
-                  Price: {hostel.price}
+                  Price: {price}
                 </p>
                 <p className="flex items-center gap-2">
                   <EventAvailableIcon />
-                  Availability: {hostel.availability}
+                  Availability: {availability}
                 </p>
               </div>
             </div>

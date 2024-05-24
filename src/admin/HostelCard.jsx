@@ -2,6 +2,18 @@ import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { useAuth } from "../providers/authProvider";
 
+const randomImages = [
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZJDJ6-Imc6T0bTk6ssNtLoArHyyjtR1NDHH7SzbcJOg&s", // Example URL, replace with actual image URLs
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBXgy2PR5JblnyNC1lMMEcbruBqB3mAfmCk4TKbnUx7Q&s", 
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe3fZO7V0tgfQrYjtDruSYLjSgAGiBnfYP-B8DxdUfXw&s",
+  "https://i.guim.co.uk/img/media/a6f9c242b7ba8c41c3a5940ae552c2d0e4318393/29_246_2626_1575/master/2626.jpg?width=300&quality=45&auto=format&fit=max&dpr=2&s=f37da454634e9d84412c1ab2ac799d48",
+  "https://static01.nyt.com/images/2012/07/06/business/Hostel1/Hostel1-superJumbo.jpg", 
+  "https://www.shutterstock.com/image-photo/young-cheerful-smiling-men-women-260nw-1090140167.jpg",
+  "https://media.istockphoto.com/id/1292522563/photo/modern-college-dorm-room-with-messy-bunk-beds-and-parquet-floor.jpg?s=612x612&w=0&k=20&c=Kq36voIf8cmnQaGv0Q1UdPf3Ty5mOpHdjoFj8Ly4Phw=",
+
+  // Add more URLs as needed
+];
+
 function HostelCard({ hostel, onUpdate, onDelete }) {
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -65,11 +77,17 @@ function HostelCard({ hostel, onUpdate, onDelete }) {
     }
   };
 
+  // Function to get a random image URL
+  const getRandomImage = () => {
+    const randomIndex = Math.floor(Math.random() * randomImages.length);
+    return randomImages[randomIndex];
+  };
+
   return (
     <div className="flex h-[250px] w-[750px] shadow-2xl rounded-2xl bg-slate-200">
       <img
         src={
-          "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG9zdGVsfGVufDB8fDB8fHww"
+          getRandomImage()
         }
         alt=""
         className="object-cover w-250px rounded-2xl"
