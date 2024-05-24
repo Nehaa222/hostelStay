@@ -35,7 +35,7 @@ function HostelDetails() {
   useEffect(() => {
     const fetchHostelDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/hostels/${id}`);
+        const response = await fetch(`https://hostelstay.onrender.com/hostels/${id}`);
         const data = await response.json(); // Assuming the response data structure matches what you expect
         setHostelDetails(data);
         console.log(hostelDetails)
