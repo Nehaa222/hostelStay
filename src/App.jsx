@@ -3,7 +3,6 @@ import Pagenotfound from "./pages/Pagenotfound";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
-import AdminLogin from "./pages/Loginpage";
 import Signuppage from "./pages/Signuppage";
 import Hostelpage from "./pages/Hostelpage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -26,7 +25,6 @@ const App = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
           <Route path="login" element={<Login />} />
-          <Route path="adminlogin" element={<AdminLogin />} />
           <Route path="signup" element={<Signuppage />} />
           <Route path="hostel" element={<Hostelpage />} />
           <Route path="admin" element={<AdminPage />} />

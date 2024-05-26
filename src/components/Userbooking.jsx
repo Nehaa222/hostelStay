@@ -7,7 +7,7 @@ import { IoBed } from "react-icons/io5";
 import { Button } from "@nextui-org/react";
 import { useAuth } from "../providers/authProvider";
 import { useParams } from "react-router-dom";
-
+import {Link } from "react-router-dom";
 const BookingConfirmation = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -52,6 +52,7 @@ function Userbooking() {
   const { id } = useParams();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [logged, session] = useAuth();
+  console.log(logged)
   const [hostelDetails, setHostelDetails] = useState(null);
   const [formValues, setFormValues] = useState({
     bedSelection: "",
@@ -87,7 +88,7 @@ function Userbooking() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formErrors = [];
+    const formErrors = {};
     console.log(formErrors)
     if (Object.keys(formErrors).length === 0) {
       try {
@@ -236,14 +237,14 @@ function Userbooking() {
                 )}
               </div>
             </div>
-            {!logged ?  <Button
+            {!logged ? <Link to="/login"><Button
               color="danger"
               type="submit"
               className="w-full p-2 text-lg font-semibold text-white rounded"
 
             >
-             You must login to book
-            </Button>  : <Button
+             <a href="http://localhost:3000/login">You must login to book</a>
+            </Button></Link>  : <Button
               color="success"
               type="submit"
               className="w-full p-2 text-lg font-semibold text-white rounded"

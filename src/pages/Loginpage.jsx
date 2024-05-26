@@ -1,9 +1,9 @@
 import React from "react";
-import AdminLogin from "../admin/adminLogin";
+import Login from "@mui/icons-material/Login";
 const Loginpage = () => {
   return (
     <div>
-      <AdminLogin />
+      <Login />
     </div>
   );
 };

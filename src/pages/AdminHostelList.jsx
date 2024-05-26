@@ -3,9 +3,11 @@ import { Input, Button } from "@nextui-org/react";
 import HostelCard from "../admin/HostelCard";
 import { useState, useEffect } from "react";
 import { useAuth } from "../providers/authProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminHostelList() {
   const [logged, session] = useAuth();
+  const navigate = useNavigate();
   console.log(session);
   const [hostels, setHostels] = useState([]);
   const [onAdd, setOnAdd] = useState(false);
@@ -44,7 +46,7 @@ export default function AdminHostelList() {
         headers: {
           'accept': 'application/json',
           'Authorization': `Bearer ${session}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(newHostel)
       });
@@ -63,6 +65,7 @@ export default function AdminHostelList() {
       console.error("Error adding hostel:", error.message);
     }
   };
+
 
   useEffect(() => {
     const fetchHostels = async () => {
@@ -87,10 +90,12 @@ export default function AdminHostelList() {
       }
     };
   
-    if (session) { // Conditional check for session
+    if (!localStorage.REACT_TOKEN_AUTH_KEY) { // Redirect if not logged in
+      navigate("/login"); // Using navigate instead of history.push
+    } else {
       fetchHostels();
     }
-  }, [session]); // Remove session from dependency array
+  }, [session, navigate]); // Remove session from dependency array
 
   // Function to get a random image URL
   const getRandomImage = () => {

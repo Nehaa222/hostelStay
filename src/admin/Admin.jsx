@@ -89,6 +89,8 @@ export default function Admin() {
       });
       if (response.ok) {
         fetchAllBookings();
+        const data = await response.json(); // Assuming the response contains a JSON message
+        alert(`${data.message}`);
       } else {
         console.error("Failed to accept booking");
       }
@@ -98,6 +100,7 @@ export default function Admin() {
   };
 
   const handleDecline = async (id) => {
+    console.log(session)
     try {
       const response = await fetch(`https://hostelstay.onrender.com/admin/bookings/${id}/decline`, {
         method: "PUT",
@@ -164,7 +167,7 @@ export default function Admin() {
                       <TableCell style={{ padding: "16px" }}>{booking.hostelName}</TableCell>
                       <TableCell style={{ padding: "16px" }}>{booking.selectedBed}</TableCell>
                       <TableCell align="center" style={{ padding: "16px" }}>
-                        <Button variant="contained" color="success" onClick={() => handleAccept(booking._id.$oid)} style={{ marginRight: "8px" }}>Accept</Button>
+                        <Button variant="contained" color="success" onClick={() => handleAccept(booking._id.$oid)} style={{ marginRight: "8px" } }>Accept</Button>
                         <Button variant="contained" color="error" onClick={() => handleDecline(booking._id.$oid)}>Decline</Button>
                       </TableCell>
                     </TableRow>
@@ -173,6 +176,8 @@ export default function Admin() {
               </Table>
             </TableContainer>
           </div>
+          <script>
+          </script>
 
         </div>
       </div>

@@ -12,6 +12,7 @@ import girls2 from "../images/girls2.jpeg";
 import girls3 from "../images/girls3.jpeg";
 import girls4 from "../images/girls4.jpeg";
 const Home = () => {
+  localStorage.clear()
   return (
     <div>
       <Navbar />

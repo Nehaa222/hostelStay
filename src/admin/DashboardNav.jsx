@@ -5,7 +5,16 @@ import { SiHiltonhotelsandresorts } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
+
+
 function DashboardNav() {
+  const navigate = useNavigate(); 
+  
+  if (!localStorage.REACT_TOKEN_AUTH_KEY)  // Redirect if not logged in
+    navigate("/login"); // Using navigate instead of history.push
+ 
   return (
     <>
       <nav className="flex flex-col w-[14rem] h-screen justify-evenly items-center sticky top-0 bottom-0 shadow-2xl bg-[#6722b5] text-seto rounded-r-xl drop-shadow-xl">
